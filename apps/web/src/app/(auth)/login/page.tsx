@@ -134,13 +134,13 @@ export default function LoginPage() {
             <GovEmblem size={44} className="bg-white/10 border-white/20 text-amber-300" />
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-white font-extrabold text-lg sm:text-xl tracking-tight">BHUMITRA</span>
+                <span className="text-white font-extrabold text-lg sm:text-xl tracking-tight">DHARA</span>
                 <span className="text-amber-400 font-bold text-xs bg-amber-400/15 border border-amber-400/30 px-2 py-0.5 rounded">
-                  भूमिमित्र
+                  डिजिटल हब
                 </span>
               </div>
               <p className="text-xs text-slate-300 font-medium mt-0.5">
-                National Land Acquisition Intelligence &amp; Management Platform
+                Digital Hub for Acquisition, Rehabilitation &amp; Administration
               </p>
             </div>
           </div>
@@ -499,7 +499,7 @@ export default function LoginPage() {
               {/* Navigation Return */}
               <div className="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
                 <Link href="/" className="hover:text-[#0F2D4A] font-medium flex items-center gap-1">
-                  <span>←</span> Return to BHUMITRA Platform Home
+                  <span>←</span> Return to DHARA Platform Home
                 </Link>
                 <Link href="/design-system" className="hover:text-[#0F2D4A] font-medium text-amber-700">
                   Platform Design System Spec →
@@ -524,7 +524,7 @@ export default function LoginPage() {
             </p>
             <p className="text-slate-700">
               Toll Free Helpdesk: <span className="font-semibold text-slate-800">1800-11-DOLR (3657)</span> |
-              Email: <span className="font-semibold text-slate-800">support-bhumitra@gov.in</span>
+              Email: <span className="font-semibold text-slate-800">support-dhara@gov.in</span>
             </p>
           </div>
         </div>
@@ -534,7 +534,7 @@ export default function LoginPage() {
       <footer className="bg-[#0B1F33] text-white/60 border-t border-slate-800 py-4 px-4 text-center text-xs">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <div>
-            © 2026 Department of Land Resources (DoLR), Ministry of Rural Development, Government of India
+            © 2026 Department of Land Resources (DoLR), Ministry of Rural Development, Government of India — DHARA Platform
           </div>
           <div className="text-[11px] text-slate-300">
             RFCTLARR Act 2013 Statutory Compliance Engine

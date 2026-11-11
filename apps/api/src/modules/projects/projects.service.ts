@@ -39,7 +39,7 @@ export class ProjectsService {
             where,
             include: { state: true, district: true },
             take: query?.limit || 50,
-            skip: query?.page ? (query.page - 1) * (query.limit || 50) : 0,
+            skip: query?.offset || 0,
             orderBy: { createdAt: 'desc' },
           }),
           this.prisma.project.count({ where }),

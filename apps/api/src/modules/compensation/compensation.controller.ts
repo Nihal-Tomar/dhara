@@ -71,10 +71,14 @@ export class CompensationController {
     };
   }
 
-  @Public()
+  // SEC-07: Payment records contain beneficiary names, masked bank accounts, IFSC codes,
+  // and payment amounts — PII and financial data. Requires authentication.
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('DISTRICT_COLLECTOR', 'CALA', 'COMPENSATION_OFFICER', 'JOINT_SECRETARY', 'STATE_NODAL_OFFICER', 'SUPER_ADMIN')
   @Get('payments')
-  @ApiOperation({ summary: 'List DBT payment transactions' })
-  getPayments() {
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'List DBT payment transactions (requires authentication)' })
+  getPayments(@CurrentUser() _user: UserSession) {
     return {
       data: this.compensationService.getPayments(),
     };

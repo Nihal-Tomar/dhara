@@ -1,0 +1,40 @@
+# Web Dockerfile build context — excludes development-only and sensitive files
+
+# Dependencies (reinstalled inside image)
+node_modules/
+.pnpm-store/
+
+# Next.js build output (rebuilt inside image)
+.next/
+out/
+
+# Environment files — injected at runtime
+.env
+.env.*
+!.env.example
+
+# Secrets
+secrets/
+*.pem
+*.key
+
+# Test / coverage
+coverage/
+*.spec.ts
+*.test.ts
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
+
+# Editor / OS artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# AI-agent instruction files (not needed in production image)
+AGENTS.md
+CLAUDE.md
+README.md

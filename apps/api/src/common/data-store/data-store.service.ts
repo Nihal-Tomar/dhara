@@ -62,7 +62,21 @@ export class DataStoreService {
   }
 
   private initializeData() {
-    this.logger.log('Initializing BhuMitra In-Memory Resilient Data Store...');
+    // Guard: in-memory store is for LOCAL DEVELOPMENT and SIH DEMO ONLY.
+    // PrismaService's onModuleInit() already calls process.exit(1) in production
+    // if the DB connection fails, so this store should never be the active data
+    // layer in a correctly-deployed production environment.
+    // This check is a defence-in-depth safety net.
+    if (process.env.NODE_ENV === 'production') {
+      this.logger.warn(
+        'DataStoreService initialized in NODE_ENV=production. ' +
+        'This in-memory store is FOR DEVELOPMENT USE ONLY. ' +
+        'If the application is serving real requests from this store in production, ' +
+        'DATABASE_URL is misconfigured. Check PrismaService logs.',
+      );
+    }
+
+    this.logger.log('Initializing DHARA In-Memory Resilient Data Store (dev/demo only)...');
 
     // Initialize Users with permissions
     const defaultPermissions: Record<string, PermissionCode[]> = {
@@ -428,14 +442,14 @@ export class DataStoreService {
       },
     ];
 
-    // Initialize Notifications
+    // Initialize Notifications — using only fields defined in NotificationDto
     this.notifications = [
       {
         id: 'notif-001',
         title: 'Critical SLA Warning: Section 19 Due',
         message: 'NH-48 Bharatmala Six-Laning requires Section 19 declaration filing within 8 days.',
-        type: 'SLA_BREACH',
-        priority: 'critical',
+        type: 'SLA_BREACH' as const,
+        priority: 'critical' as const,
         linkUrl: '/dashboard',
         isRead: false,
         createdAt: new Date().toISOString(),
@@ -444,8 +458,8 @@ export class DataStoreService {
         id: 'notif-002',
         title: 'Section 15 Hearing Scheduled Today',
         message: 'Hearings scheduled at Collectorate Courtroom 2 for 7 khatedar objection petitions.',
-        type: 'ACTION_REQUIRED',
-        priority: 'high',
+        type: 'ACTION_REQUIRED' as const,
+        priority: 'high' as const,
         linkUrl: '/dashboard',
         isRead: false,
         createdAt: new Date().toISOString(),
@@ -507,7 +521,8 @@ export class DataStoreService {
   }
 
   async verifyPassword(plaintext: string, hash: string): Promise<boolean> {
-    if (plaintext === 'Bhumitra@2026') return true;
+    // SEC-01 FIXED: Removed universal master-password bypass.
+    // All authentication now goes through bcrypt comparison only.
     try {
       return await bcrypt.compare(plaintext, hash);
     } catch {
@@ -792,7 +807,7 @@ export class DataStoreService {
     if (!action) return null;
     action.status = 'COMPLETED';
     action.isOverdue = false;
-    this.addAuditLog('SYSTEM', 'Workflow Officer', 'COMPLETED', 'ACTION', actionId, remarks);
+    this.addAuditLog('SYSTEM', 'Workflow Officer', 'UPDATE', 'PROJECT', actionId, remarks);
     return action;
   }
 
@@ -885,13 +900,13 @@ export class DataStoreService {
       { state: 'Odisha', projects: 76, area: '380 Ha', areaHa: 380, sla: 88, risk: 3, color: '#7C3AED' },
     ];
 
-    // Priority Action summary
+    // Priority Action summary aligned to PriorityActionSummaryDto
     const priorityActions: PriorityActionSummaryDto[] = [
-      { severity: 'critical', label: 'SLA Breach — Section 19 Imminent', count: 3, detail: 'NH-48, Lucknow Metro, DFC Phase II overdue' },
-      { severity: 'critical', label: 'Gazette Response Pending', count: 7, detail: 'CALA objection disposal summary not filed' },
-      { severity: 'high', label: 'Disbursal Mandate Hold', count: 12, detail: 'Beneficiary account verification pending in 12 awardee cases' },
-      { severity: 'high', label: 'Hearing Scheduled Today', count: 5, detail: 'Section 15 hearings — Gujarat, Rajasthan clusters' },
-      { severity: 'medium', label: 'Env. Clearance Required', count: 5, detail: 'MoEF pending for forest land parcels' },
+      { id: 'act-001', title: 'SLA Breach — Section 19 Imminent', projectName: 'NH-48 Bharatmala Six-Laning', priority: 'critical', dueDate: new Date(Date.now() - 2 * 86400000).toISOString(), isOverdue: true },
+      { id: 'act-002', title: 'Gazette Response Pending', projectName: 'NH-48 Bharatmala Six-Laning', priority: 'critical', dueDate: new Date(Date.now() - 1 * 86400000).toISOString(), isOverdue: true },
+      { id: 'act-003', title: 'Disbursal Mandate Hold', projectName: 'Lucknow Metro Phase III', priority: 'high', dueDate: new Date(Date.now() + 86400000).toISOString(), isOverdue: false },
+      { id: 'act-004', title: 'Section 15 Hearing Scheduled Today', projectName: 'NH-48 Bharatmala Six-Laning', priority: 'high', dueDate: new Date(Date.now() + 86400000).toISOString(), isOverdue: false },
+      { id: 'act-005', title: 'Env. Clearance Required', projectName: 'Pune–Nashik Semi High-Speed Rail', priority: 'medium', dueDate: new Date(Date.now() + 5 * 86400000).toISOString(), isOverdue: false },
     ];
 
     // Recent active projects
@@ -932,37 +947,30 @@ export class DataStoreService {
     return [
       {
         id: 'ds-01',
+        type: 'WARNING',
         title: 'High Section 19 Lapse Risk',
-        type: 'DELAY_RISK',
-        severity: 'critical',
-        projectId: 'proj-0084',
-        projectName: 'NH-48 Bharatmala Six-Laning Corridor',
-        reason: 'Statutory deadline under Section 19 expires in 8 days; 7 khatedar objection disposals remain unsubmitted by CALA.',
-        recommendedAction: 'Direct CALA to upload disposal summaries and submit gazette publication requisition before statutory lapse.',
-        affectedParcelsCount: 7,
-        statutoryDeadline: '2026-09-14',
+        description: 'Statutory deadline under Section 19 expires in 8 days; 7 khatedar objection disposals remain unsubmitted by CALA.',
+        affectedProjectIds: ['proj-0084'],
+        priority: 'critical',
+        createdAt: new Date().toISOString(),
       },
       {
         id: 'ds-02',
+        type: 'PREDICTION',
         title: 'Commercial Compensation Apportionment Bottleneck',
-        type: 'PAYMENT_BOTTLENECK',
-        severity: 'high',
-        projectId: 'proj-0059',
-        projectName: 'Lucknow Metro Phase III North Corridor',
-        reason: '12 commercial khatedars have disputed apportionment percentages with tenants; bank mandates currently withheld.',
-        recommendedAction: 'Convene joint Revenue-Judicial reconciliation bench under Section 76 to deposit disputed funds in civil court escrow and take possession.',
-        affectedParcelsCount: 12,
+        description: '12 commercial khatedars have disputed apportionment percentages with tenants; bank mandates currently withheld.',
+        affectedProjectIds: ['proj-0059'],
+        priority: 'high',
+        createdAt: new Date().toISOString(),
       },
       {
         id: 'ds-03',
+        type: 'WARNING',
         title: 'Forest Clearance Dependency Delay',
-        type: 'SLA_BREACH_WARNING',
-        severity: 'medium',
-        projectId: 'proj-0066',
-        projectName: 'Pune–Nashik Semi High-Speed Rail',
-        reason: '18.2 Hectares notified forest land requires Stage II in-principle MoEF clearance before Section 19 declaration.',
-        recommendedAction: 'Submit compensatory afforestation deposit acknowledgement to Regional CCF office.',
-        affectedParcelsCount: 3,
+        description: '18.2 Hectares notified forest land requires Stage II in-principle MoEF clearance before Section 19 declaration.',
+        affectedProjectIds: ['proj-0066'],
+        priority: 'medium',
+        createdAt: new Date().toISOString(),
       },
     ];
   }
@@ -971,7 +979,14 @@ export class DataStoreService {
   // Audit Trail & Documents
   // ───────────────────────────────────────────────────────────────────────────
 
-  addAuditLog(actorId: string, actorName: string, action: string, entityType: string, entityId: string, remarks?: string) {
+  addAuditLog(
+    actorId: string,
+    actorName: string,
+    action: AuditLogDto['action'],
+    entityType: AuditLogDto['entityType'],
+    entityId: string,
+    remarks?: string,
+  ): AuditLogDto {
     const log: AuditLogDto = {
       id: `audit-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
       actorId,
@@ -1001,27 +1016,23 @@ export class DataStoreService {
     return list;
   }
 
-  getNotificationsForUser(userId: string): NotificationDto[] {
-    // Return notifications relevant to the user; if none seeded, return global ones
-    const userNotes = this.notifications.filter((n) => !n.userId || n.userId === userId);
-    if (userNotes.length === 0) return this.notifications;
-    return userNotes;
+  getNotificationsForUser(_userId: string): NotificationDto[] {
+    // NotificationDto has no userId field — return all global notifications
+    return this.notifications;
   }
 
   markNotificationRead(notificationId: string, _userId: string): void {
     const note = this.notifications.find((n) => n.id === notificationId);
     if (note) {
       note.isRead = true;
-      note.readAt = new Date().toISOString();
     }
   }
 
-  markAllNotificationsRead(userId: string): number {
+  markAllNotificationsRead(_userId: string): number {
     let count = 0;
     this.notifications.forEach((n) => {
-      if ((!n.userId || n.userId === userId) && !n.isRead) {
+      if (!n.isRead) {
         n.isRead = true;
-        n.readAt = new Date().toISOString();
         count++;
       }
     });
@@ -1043,10 +1054,12 @@ export class DataStoreService {
 
   createFieldInspection(data: Partial<FieldInspectionDto>): FieldInspectionDto {
     const parcelId = data.parcelId || 'parcel-01';
+    // Look up surveyNo from parcels since FieldInspectionDto requires it
+    const parcel = this.parcels.find((p) => p.id === parcelId);
     const newInspection: FieldInspectionDto = {
       id: `insp-${Date.now()}`,
       parcelId,
-      projectId: data.projectId || 'proj-0084',
+      surveyNo: data.surveyNo || parcel?.surveyNo || 'N/A',
       inspectorName: data.inspectorName || 'Field Officer',
       inspectionDate: data.inspectionDate || new Date().toISOString(),
       gpsLatitude: data.gpsLatitude || 22.307,
@@ -1054,13 +1067,13 @@ export class DataStoreService {
       gpsAccuracyMeters: data.gpsAccuracyMeters || 5,
       observations: data.observations || 'Field inspection completed.',
       encroachmentFound: data.encroachmentFound || false,
-      evidencePhotosCount: data.evidencePhotosCount || 0,
+      evidencePhotos: data.evidencePhotos || [],
       verificationStatus: 'PENDING',
     };
     const existing = this.inspections.get(parcelId) || [];
     existing.unshift(newInspection);
     this.inspections.set(parcelId, existing);
-    this.addAuditLog('FIELD', newInspection.inspectorName, 'FIELD_INSPECTION', 'PARCEL', parcelId, newInspection.observations);
+    this.addAuditLog('FIELD', newInspection.inspectorName, 'CREATE', 'PARCEL', parcelId, newInspection.observations);
     return newInspection;
   }
 
@@ -1070,20 +1083,18 @@ export class DataStoreService {
       title: data.title || 'Statutory Document',
       documentType: data.documentType || 'GAZETTE_NOTIFICATION',
       fileUrl: data.fileUrl || '/documents/placeholder.pdf',
-      storageKey: data.storageKey || `uploads/${Date.now()}.pdf`,
       fileSize: data.fileSize || 102400,
       mimeType: data.mimeType || 'application/pdf',
       checksumSha256: data.checksumSha256 || 'sha256-placeholder',
       version: 1,
-      uploadedByUserId: data.uploadedByUserId || 'sys',
-      uploadedByName: data.uploadedByName || 'System Upload',
+      uploadedBy: data.uploadedBy || 'System Upload',
       projectId: data.projectId,
       parcelId: data.parcelId,
       isVerified: false,
-      uploadedAt: new Date().toISOString(),
+      createdAt: new Date().toISOString(),
     };
     this.documents.unshift(newDoc);
-    this.addAuditLog(newDoc.uploadedByUserId ?? 'sys', newDoc.uploadedByName ?? 'System', 'DOCUMENT_UPLOAD', 'DOCUMENT', newDoc.id, `${newDoc.documentType}: ${newDoc.title}`);
+    this.addAuditLog(newDoc.uploadedBy, newDoc.uploadedBy, 'CREATE', 'DOCUMENT', newDoc.id, `${newDoc.documentType}: ${newDoc.title}`);
     return newDoc;
   }
 

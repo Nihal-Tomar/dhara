@@ -1,0 +1,56 @@
+# API Dockerfile build context — excludes development-only and sensitive files
+
+# Dependencies (reinstalled inside the image)
+node_modules/
+.pnpm-store/
+
+# Build output (rebuilt inside image)
+dist/
+
+# Embedded PostgreSQL local data directory
+data/db/
+data/
+
+# Development / debug scripts — NOT needed in production image
+bootstrap.js
+init_db.js
+test_pg.js
+validate_e2e.ts
+
+# Prisma: keep schema and migrations; exclude generated client (regenerated during build)
+# prisma/schema.prisma → KEEP
+# prisma/migrations/  → KEEP
+# prisma/seed/        → KEEP (needed for initial seeding)
+
+# Environment files — injected at runtime, never baked into image
+.env
+.env.*
+!.env.example
+
+# Secrets
+secrets/
+*.pem
+*.key
+*.cert
+
+# Test / coverage artifacts
+coverage/
+*.spec.ts
+*.e2e-spec.ts
+
+# Temporary and audit files
+*.log
+*.pid
+__audit_*.txt
+.audit/
+AUDIT_REPORT.md
+
+# Editor / OS artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# TypeScript build info
+*.tsbuildinfo

@@ -1,0 +1,44 @@
+# Root Docker build context — used by api and web Dockerfiles
+
+# Never include in any image
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+
+# Local database data
+apps/api/data/db/
+
+# Development debug scripts
+apps/api/bootstrap.js
+apps/api/init_db.js
+apps/api/test_pg.js
+apps/api/validate_e2e.ts
+
+# Audit files
+__audit_*.txt
+.audit/
+AUDIT_REPORT.md
+
+# Version control
+.git/
+.gitignore
+
+# Turborepo cache
+.turbo/
+
+# OS / editor artifacts
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Build outputs are rebuilt inside the image
+apps/web/.next/
+apps/api/dist/
+packages/types/dist/
+
+# Test coverage
+coverage/

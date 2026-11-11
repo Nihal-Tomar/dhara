@@ -11,12 +11,16 @@ import { AuthService } from './auth.service';
       global: true,
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        secret:
-          configService.get<string>('JWT_SECRET') ||
-          'bhumitra_dev_jwt_secret_change_in_production_si2026',
-        signOptions: { expiresIn: '15m' },
-      }),
+      useFactory: (configService: ConfigService) => {
+        // SEC-03 FIXED: No hardcoded fallback secret in JWT module registration.
+        // getJwtSecret() in AuthService performs the actual validation at call time.
+        // Here we set a placeholder; the real enforcement is in AuthService.
+        const secret = configService.get<string>('JWT_SECRET') || '';
+        return {
+          secret,
+          signOptions: { expiresIn: '15m' },
+        };
+      },
     }),
   ],
   controllers: [AuthController],

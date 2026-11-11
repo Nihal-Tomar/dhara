@@ -24,7 +24,7 @@ export const HeroSection: React.FC = () => {
           filter: 'contrast(1.08) brightness(1.02) saturate(1.04)',
         }}
         role="img"
-        aria-label="Bhu-Mitra National Land Acquisition & Management Platform Hero with Indian rural landscape, infrastructure corridor, and farmer holding GIS tablet"
+        aria-label="DHARA — National Land Acquisition & Management Platform Hero"
       />
 
       {/* Refined Directional Lighting Overlay */}

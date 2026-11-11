@@ -1,76 +1,43 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Noto_Sans_Devanagari } from 'next/font/google';
 import { LocaleProvider } from '@bhumitra/ui';
+import { Suspense } from 'react';
+import { DharaAiAssistant } from '../components/ai/DharaAiAssistant';
+import { AuthProvider } from '../lib/authContext';
 import './globals.css';
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800'],
-});
-
-const notoDevanagari = Noto_Sans_Devanagari({
-  subsets: ['devanagari'],
-  variable: '--font-devanagari',
-  display: 'swap',
-  weight: ['400', '500', '600', '700'],
-});
-
 export const metadata: Metadata = {
-  title: {
-    default: 'BHUMITRA — National Land Acquisition Intelligence & Management Platform',
-    template: '%s | BHUMITRA',
-  },
-  description:
-    'BHUMITRA is the National Land Acquisition Intelligence & Management Platform of the Department of Land Resources (DoLR), Ministry of Rural Development, Government of India. Statutory compliance under RFCTLARR Act 2013.',
-  keywords: [
-    'land acquisition',
-    'DoLR',
-    'RFCTLARR Act 2013',
-    'Ministry of Rural Development',
-    'Government of India',
-    'BhuMitra',
-    'cadastral',
-    'GIS',
-    'gazette notification',
-    'National Infrastructure Corridors',
-  ],
-  robots: { index: false, follow: false },
-  authors: [{ name: 'Department of Land Resources, MoRD, Government of India' }],
+  title: { default:'DHARA — National Land Acquisition Command Platform', template:'%s | DHARA' },
+  description:'DHARA: unified national digital command platform for land acquisition intelligence, GIS cadastral management, compensation disbursement, and statutory compliance under RFCTLARR Act 2013. DoLR, MoRD, Government of India.',
+  keywords:['DHARA','land acquisition','DoLR','RFCTLARR Act 2013','GIS','cadastral','Ministry of Rural Development'],
+  robots:{ index:false, follow:false },
+  authors:[{ name:'Department of Land Resources, MoRD, Government of India' }],
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  themeColor: '#0B1F33',
+  width:'device-width',
+  initialScale:1,
+  themeColor:'#FAF7F2',
 };
 
-import { Suspense } from 'react';
-import { BhuMitraAiAssistant } from '../components/ai/BhuMitraAiAssistant';
-import { AuthProvider } from '../lib/authContext';
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }:Readonly<{ children:React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Plus Jakarta Sans (UI) · Instrument Serif (italic accent) · JetBrains Mono (data) · Noto Devanagari */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap"
+        />
       </head>
-      <body className={`${inter.variable} ${notoDevanagari.variable} font-sans antialiased`}>
-        {/* Skip to main content — WCAG 2.1 AA */}
-        <a href="#main-content" className="skip-nav">
-          Skip to main content
-        </a>
+      <body className="antialiased">
+        <a href="#main-content" className="skip-nav">Skip to main content</a>
         <LocaleProvider defaultLocale="en">
           <AuthProvider>
             {children}
             <Suspense fallback={null}>
-              <BhuMitraAiAssistant />
+              <DharaAiAssistant />
             </Suspense>
           </AuthProvider>
         </LocaleProvider>

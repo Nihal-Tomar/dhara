@@ -2,16 +2,21 @@
  * BhuMitra — Deterministic Master Demonstration Dataset
  * Smart India Hackathon 2026 — Problem Statement 26016
  *
- * Fully relational seed data:
- * - 6 States & Districts
- * - Official Officer Presets matching the frontend login
- * - 6 Flagship Projects
- * - Cadastral Land Parcels matching GIS Section & Parcel 360
- * - Valuations, 100% Solatium, Compensation Awards & DBT Disbursals
- * - R&R Resettlement Cases & Entitlements
- * - Grievance Cases & Statutory Section 15 Objections
- * - Field Inspection Verifications & GPS Geotagged Evidence
- * - Priority Action Centre Items with Live SLA Timelines
+ * ╔══════════════════════════════════════════════════════════════╗
+ * ║  DEMO / DEVELOPMENT DATA — NOT FOR PRODUCTION USE           ║
+ * ║                                                              ║
+ * ║  SEED_PASSWORD_HASH is the bcrypt hash of "Bhumitra@2026".  ║
+ * ║  This password is public knowledge (visible in source code, ║
+ * ║  README, login UI, and test specs).                         ║
+ * ║                                                              ║
+ * ║  The Prisma seed script (seed/index.ts) REFUSES to use this ║
+ * ║  hash when NODE_ENV=production. Production accounts must be ║
+ * ║  provisioned separately with strong unique passwords via    ║
+ * ║  the SEED_PASSWORD environment variable.                    ║
+ * ║                                                              ║
+ * ║  The in-memory DataStoreService is blocked from activating  ║
+ * ║  in production by PrismaService (process.exit on DB fail).  ║
+ * ╚══════════════════════════════════════════════════════════════╝
  */
 
 export const SEED_STATES = [
@@ -56,9 +61,11 @@ export const SEED_ROLES = [
   { id: 'role-field-officer', code: 'FIELD_OFFICER', name: 'Field Survey Officer', description: 'On-site cadastral inspection & GPS verification' },
 ];
 
-// Pre-computed bcrypt hash for password "Bhumitra@2026"
-// Generated via bcrypt.hashSync("Bhumitra@2026", 10)
-export const SEED_PASSWORD_HASH = '$2a$10$Qj/NfX.6rLzZp6Ew0Yp0E.7Xj8oM7K6z5yL4x3w2v1u0t9s8r7q6p';
+// Real bcrypt hash for password "Bhumitra@2026" — cost factor 10.
+// Generated via bcryptjs.hashSync("Bhumitra@2026", 10) and verified.
+// The previous placeholder hash was never valid; this is now the correct hash
+// so that bcrypt.compare() succeeds for all seeded demo officers.
+export const SEED_PASSWORD_HASH = '$2b$10$aG8jt4pMOljJfUy6iRfBSuvy2VQazBv6E6kISy8elVrkl0C4YXmo.';
 
 export const SEED_USERS = [
   {

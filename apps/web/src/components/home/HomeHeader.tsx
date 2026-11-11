@@ -39,7 +39,7 @@ export const HomeHeader: React.FC = () => {
       <div className="max-w-[1440px] mx-auto px-3 sm:px-6 lg:px-8 py-2.5 sm:py-3 flex items-center justify-between gap-2 lg:gap-3 xl:gap-4">
         
         {/* Left: Government of India Identity with Official Ashoka Lion Capital */}
-        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group" aria-label="Government of India Bhu-Mitra Home">
+        <Link href="/" className="flex items-center gap-2 sm:gap-2.5 shrink-0 group" aria-label="DHARA — Government of India Home">
           {/* Official State Emblem of India Vector Asset */}
           <div className="h-9 sm:h-11 w-auto flex items-center justify-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}

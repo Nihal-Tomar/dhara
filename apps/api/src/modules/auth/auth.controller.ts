@@ -1,5 +1,6 @@
 import { Controller, Post, Get, Body, HttpCode, HttpStatus, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from './auth.service';
 import { Public } from '../../common/decorators/public.decorator';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
@@ -8,6 +9,8 @@ import type { LoginDto, AuthResponse, UserSession } from '@bhumitra/types';
 
 @ApiTags('Authentication & Identity')
 @Controller('auth')
+// SEC-10: Stricter rate limit on all auth endpoints — 20 attempts per minute per IP.
+@Throttle({ default: { ttl: 60_000, limit: 20 } })
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
@@ -78,26 +81,39 @@ export class AuthController {
 
   @Public()
   @Post('otp/send')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Send Aadhaar/Officer SSO OTP (Prototype Demo)' })
+  @HttpCode(HttpStatus.SERVICE_UNAVAILABLE)
+  @ApiOperation({ summary: 'Send OTP via Aadhaar/Officer SSO (not yet implemented)' })
   sendOtp(@Body() _body: { aadhaarNumber?: string; phone?: string }) {
+    // SEC-02 FIXED: The demo OTP endpoint previously returned a hardcoded OTP
+    // in the response body, allowing unauthenticated access to any officer account.
+    // Real OTP/SSO integration requires a registered federated identity provider.
+    // This endpoint is disabled until a production-grade SSO integration is built.
     return {
-      data: {
-        message: 'Statutory demonstration OTP dispatched',
-        expiresInSeconds: 300,
-        demoOtp: '2026',
+      error: {
+        code: 'SSO_NOT_IMPLEMENTED',
+        message:
+          'SSO/OTP authentication is not yet integrated with a production identity provider. ' +
+          'Use credential-based login via POST /auth/login.',
+        statusCode: HttpStatus.SERVICE_UNAVAILABLE,
       },
     };
   }
 
   @Public()
   @Post('otp/verify')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Verify Aadhaar/Officer SSO OTP (Prototype Demo)' })
-  verifyOtp(@Body() body: { otp: string; userId?: string }) {
-    return this.login({
-      userId: body.userId || 'GJ-DM-VD-0042',
-      authMode: 'sso',
-    });
+  @HttpCode(HttpStatus.SERVICE_UNAVAILABLE)
+  @ApiOperation({ summary: 'Verify OTP via Aadhaar/Officer SSO (not yet implemented)' })
+  verifyOtp(@Body() _body: { otp: string; userId?: string }) {
+    // SEC-02 FIXED: This endpoint previously granted valid JWTs for any user ID
+    // with authMode:'sso', bypassing all authentication. Disabled.
+    return {
+      error: {
+        code: 'SSO_NOT_IMPLEMENTED',
+        message:
+          'SSO/OTP authentication is not yet integrated with a production identity provider. ' +
+          'Use credential-based login via POST /auth/login.',
+        statusCode: HttpStatus.SERVICE_UNAVAILABLE,
+      },
+    };
   }
 }

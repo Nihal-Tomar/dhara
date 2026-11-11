@@ -927,7 +927,6 @@ export class AiService {
     if (!session) {
       session = {
         id: sessionId,
-        title: userText.length > 30 ? `${userText.slice(0, 30)}...` : userText || 'New Acquisition Session',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
         messages: [],

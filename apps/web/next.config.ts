@@ -1,8 +1,7 @@
 import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  // ─── BhuMitra Next.js Configuration ───────────────────────────────────────
-  // Stage 1: Foundation configuration only.
+  // ─── DHARA Next.js Configuration ──────────────────────────────────────────
   // GIS, dynamic imports, image domains etc. added in their respective stages.
 
   // Strict mode for catching issues early

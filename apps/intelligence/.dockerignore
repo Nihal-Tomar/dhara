@@ -1,0 +1,25 @@
+# Intelligence service Dockerfile build context
+
+# Virtual environments (dependencies installed inside image)
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp

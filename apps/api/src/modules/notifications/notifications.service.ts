@@ -23,11 +23,14 @@ export class NotificationsService {
         if (notifs.length > 0) {
           return notifs.map((n) => ({
             id: n.id,
-            userId: n.userId,
             title: n.title,
             message: n.message,
-            type: (n.type as any) || 'SLA_ALERT',
-            priority: (n.priority as any) || 'MEDIUM',
+            // Map Prisma notification type/priority to NotificationDto union literals
+            type: (n.type === 'SLA_ALERT' ? 'SLA_BREACH'
+              : n.type === 'COMPLIANCE' ? 'STATUS_UPDATE'
+              : n.type === 'APPROVAL_REQUIRED' ? 'ACTION_REQUIRED'
+              : (n.type as NotificationDto['type'])) || 'SYSTEM',
+            priority: ((n.priority || '').toLowerCase() as NotificationDto['priority']) || 'medium',
             linkUrl: n.linkUrl || undefined,
             isRead: n.isRead,
             createdAt: n.createdAt.toISOString(),
@@ -80,24 +83,23 @@ export class NotificationsService {
     return { success: true, count: count || memCount };
   }
 
+  /**
+   * Creates a notification. Uses NotificationDto-compatible type/priority literals.
+   * Maps internal service enum names to the canonical NotificationDto union.
+   */
   async createNotification(
-    userId: string,
+    _userId: string,
     title: string,
     message: string,
-    type: 'SLA_ALERT' | 'COMPLIANCE' | 'SYSTEM' | 'APPROVAL_REQUIRED',
-    priority: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL',
-    entityType?: string,
-    entityId?: string,
+    type: NotificationDto['type'],
+    priority: NotificationDto['priority'],
   ): Promise<NotificationDto> {
     const notif: NotificationDto = {
       id: `notif-${Date.now()}`,
-      userId,
       title,
       message,
       type,
       priority,
-      entityType,
-      entityId,
       isRead: false,
       createdAt: new Date().toISOString(),
     };
@@ -107,11 +109,12 @@ export class NotificationsService {
         await this.prisma.notification.create({
           data: {
             id: notif.id,
-            userId,
+            userId: _userId,
             title,
             message,
-            type,
-            priority,
+            // Store the canonical type; Prisma schema uses its own enum
+            type: type === 'SLA_BREACH' ? 'SLA_ALERT' : type,
+            priority: priority.toUpperCase(),
             isRead: false,
           },
         });

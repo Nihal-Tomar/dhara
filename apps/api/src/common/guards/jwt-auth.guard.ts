@@ -41,9 +41,12 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const token = authHeader.split(' ')[1];
-    const secret =
-      this.configService.get<string>('JWT_SECRET') ||
-      'bhumitra_dev_jwt_secret_change_in_production_si2026';
+
+    // SEC-03 FIXED: No hardcoded fallback secret.
+    const secret = this.configService.get<string>('JWT_SECRET');
+    if (!secret) {
+      throw new UnauthorizedException('Server authentication configuration error');
+    }
 
     try {
       const payload = this.jwtService.verify(token, { secret });

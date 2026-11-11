@@ -35,6 +35,7 @@ export class FieldService {
           return items.map((i) => ({
             id: i.id,
             parcelId: i.parcelId,
+            surveyNo: i.parcel?.surveyNo || 'N/A',
             inspectorName: i.inspectorName,
             inspectionDate: i.inspectionDate.toISOString(),
             gpsLatitude: i.gpsLatitude,
@@ -80,7 +81,7 @@ export class FieldService {
     const newInspection: FieldInspectionDto = {
       id: `insp-${Date.now()}`,
       parcelId: data.parcelId,
-      projectId: data.projectId,
+      surveyNo: data.surveyNo || 'N/A',
       inspectorName: user.name,
       inspectionDate: new Date().toISOString(),
       gpsLatitude: lat,
@@ -91,7 +92,6 @@ export class FieldService {
       evidencePhotos: data.evidencePhotos || [
         'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400',
       ],
-      evidencePhotosCount: data.evidencePhotos?.length || 1,
       verificationStatus: 'VERIFIED',
     };
 
@@ -134,7 +134,7 @@ export class FieldService {
       user.id,
       user.name,
       'CREATE',
-      'FIELD_INSPECTION',
+      'PARCEL',
       created.id,
       `Geo-tagged field inspection submitted at (${lat}, ${lon}) for parcel ${newInspection.parcelId}`,
     );
@@ -195,7 +195,7 @@ export class FieldService {
       actorId,
       actorName,
       'UPDATE',
-      'FIELD_INSPECTION',
+      'PARCEL',
       id,
       `Verified inspection status as ${verificationStatus}`,
     );

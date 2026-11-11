@@ -150,4 +150,24 @@ describe('DataStoreService', () => {
       expect(fc.features[0].geometry.type).toBe('Polygon');
     });
   });
+
+  // SEC-01: Verify master-password bypass is removed from verifyPassword.
+  describe('verifyPassword — SEC-01 regression', () => {
+    it('should reject arbitrary plaintext that is NOT the correct bcrypt hash', async () => {
+      // The plaintext 'Bhumitra@2026' is the REAL password for seeded users,
+      // but only because bcrypt.compare succeeds with the stored hash.
+      // Any OTHER string must fail.
+      const fakeHash = '$2a$10$invalidHashThatWillNeverMatchAnything000000000000000000000';
+      const result = await dataStore.verifyPassword('Bhumitra@2026', fakeHash);
+      expect(result).toBe(false);
+    });
+
+    it('should not accept "Bhumitra@2026" as a universal bypass against an unrelated hash', async () => {
+      // Create a bcrypt hash of a DIFFERENT password
+      const bcrypt = require('bcryptjs');
+      const otherHash = await bcrypt.hash('DifferentPassword@999', 10);
+      const result = await dataStore.verifyPassword('Bhumitra@2026', otherHash);
+      expect(result).toBe(false);
+    });
+  });
 });

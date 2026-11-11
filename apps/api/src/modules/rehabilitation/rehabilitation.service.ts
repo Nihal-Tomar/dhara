@@ -130,7 +130,7 @@ export class RehabilitationService {
       actorId,
       actorName,
       'CREATE',
-      'REHABILITATION',
+      'PARCEL',
       newCase.id,
       `Created R&R case for family of ${newCase.familyHeadName}`,
     );
@@ -182,7 +182,7 @@ export class RehabilitationService {
       actorId,
       actorName,
       'UPDATE',
-      'REHABILITATION',
+      'PARCEL',
       id,
       `Updated R&R case status to ${status}`,
     );

@@ -12,7 +12,7 @@ export const FinalCTA: React.FC = () => {
         className="absolute inset-0 bg-cover bg-center opacity-25"
         style={{ backgroundImage: "url('/assets/bhumitra-hero-backdrop.jpg')" }}
         role="img"
-        aria-label="Bhu-Mitra National Land Acquisition Platform"
+            aria-label="DHARA National Land Acquisition Platform"
       />
 
       {/* Deep Navy to Black Gradient */}
@@ -30,7 +30,7 @@ export const FinalCTA: React.FC = () => {
         </h2>
 
         <p className="text-xs sm:text-base text-slate-300 max-w-2xl mx-auto leading-relaxed">
-          From online proposal indents to encumbrance-free legal possession — Bhu-Mitra brings transparency, real-time telemetry, and fair rehabilitation to every acquisition project in India.
+          From online proposal indents to encumbrance-free legal possession — DHARA brings transparency, real-time telemetry, and fair rehabilitation to every acquisition project in India.
         </p>
 
         {/* Dual Action Buttons */}

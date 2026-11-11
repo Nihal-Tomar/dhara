@@ -51,6 +51,7 @@ export class GrievancesService {
             isOverdue: g.status !== 'RESOLVED' && g.status !== 'CLOSED' && now > g.slaDueDate,
             assignedOfficerName: g.assignedOfficerName,
             status: g.status as any,
+            actions: [],
           }));
         }
       } catch (err) {
@@ -116,6 +117,7 @@ export class GrievancesService {
       isOverdue: false,
       assignedOfficerName: data.assignedOfficerName || 'Sub-Divisional Magistrate / Revenue Officer',
       status: 'SUBMITTED',
+      actions: [],
     };
 
     if (this.prisma && this.prisma.isDbConnected) {

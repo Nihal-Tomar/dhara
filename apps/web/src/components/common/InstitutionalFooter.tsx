@@ -25,13 +25,13 @@ export const InstitutionalFooter: React.FC = () => {
               </div>
               <div>
                 <div className="text-xl font-extrabold tracking-tight">
-                  <span className="text-white">Bhu-</span>
-                  <span className="text-[#138808]">Mitra</span>
+                  <span className="text-white">DH</span>
+                  <span className="text-[#138808]">ARA</span>
                 </div>
                 <div className="text-[11px] text-slate-400 font-medium">
                   {isHindi
-                    ? 'राष्ट्रीय भूमि अधिग्रहण निगरानी, आसूचना एवं निर्णय-समर्थन मंच'
-                    : 'National Land Acquisition Monitoring & Decision-Support Platform'}
+                    ? 'डिजिटल हब — अधिग्रहण, पुनर्वासन एवं प्रशासन'
+                    : 'Digital Hub for Acquisition, Rehabilitation & Administration'}
                 </div>
               </div>
             </div>
@@ -112,9 +112,7 @@ export const InstitutionalFooter: React.FC = () => {
                 : 'National Land Acquisition Intelligence Platform — All project corridors, gazette notices, and compensation telemetry represent model telemetry data.'}
             </span>
           </div>
-          <div className="text-[10px] text-slate-500 shrink-0 font-mono">
-            BUILD v2.5-PRODUCTION
-          </div>
+          <div>BUILD v3.0-DHARA</div>
         </div>
       </div>
 

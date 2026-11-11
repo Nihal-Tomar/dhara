@@ -18,7 +18,6 @@ export class JurisdictionGuard implements CanActivate {
     if (
       user.role === 'SUPER_ADMIN' ||
       user.role === 'CENTRAL_MINISTRY_ADMIN' ||
-      user.role === 'CENTRAL_MINISTRY_VIEWER' ||
       user.jurisdiction?.toLowerCase().includes('national') ||
       user.jurisdiction?.toLowerCase().includes('central')
     ) {

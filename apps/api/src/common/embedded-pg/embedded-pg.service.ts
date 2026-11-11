@@ -48,8 +48,37 @@ export class EmbeddedPgService implements OnModuleInit, OnModuleDestroy {
       return;
     }
 
+    const isProduction = process.env.NODE_ENV === 'production';
     const forceEmbedded = process.env.USE_EMBEDDED_PG === 'true';
     const noDbUrl = !process.env.DATABASE_URL;
+
+    // SEC-04 / ITEM-5 FIXED: In production, never silently fall back to embedded PG.
+    // If DATABASE_URL is missing or unreachable in production, crash with a clear error
+    // rather than starting an embedded server that would silently serve demo data.
+    if (isProduction && !forceEmbedded) {
+      if (noDbUrl) {
+        this.logger.error(
+          'FATAL: NODE_ENV=production but DATABASE_URL is not set. ' +
+          'Set DATABASE_URL to a real PostgreSQL connection string before deploying.',
+        );
+        process.exit(1);
+      }
+
+      const reachable = await this.probeTcp(this.parseDbHost(), this.parseDbPort());
+      if (!reachable) {
+        this.logger.error(
+          `FATAL: NODE_ENV=production but the configured PostgreSQL server ` +
+          `(${this.parseDbHost()}:${this.parseDbPort()}) is not reachable. ` +
+          'Refusing to start with embedded fallback in production.',
+        );
+        process.exit(1);
+      }
+
+      this.logger.log('Production: External PostgreSQL reachable — embedded server skipped.');
+      return;
+    }
+
+    // Development / local evaluation path:
     const externalUnreachable =
       !forceEmbedded && !noDbUrl
         ? !(await this.probeTcp(this.parseDbHost(), this.parseDbPort()))
@@ -65,7 +94,8 @@ export class EmbeddedPgService implements OnModuleInit, OnModuleDestroy {
     if (externalUnreachable) {
       this.logger.warn(
         `External PostgreSQL unreachable. ` +
-          `Falling back to embedded PostgreSQL on port ${EmbeddedPgService.PORT}.`,
+          `Falling back to embedded PostgreSQL on port ${EmbeddedPgService.PORT}. ` +
+          `This fallback is for LOCAL DEVELOPMENT ONLY.`,
       );
     } else {
       this.logger.log(

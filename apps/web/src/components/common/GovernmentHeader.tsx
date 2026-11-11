@@ -92,7 +92,7 @@ export const GovernmentHeader: React.FC = () => {
       <div className="w-full max-w-[1440px] mx-auto px-3 sm:px-4 lg:px-5 2xl:px-8 py-2 2xl:py-2.5 flex items-center justify-between gap-1.5 sm:gap-2.5 2xl:gap-3 min-w-0">
         
         {/* Left: Government of India Identity with Official Emblem */}
-        <Link href="/" className="flex items-center gap-2 2xl:gap-2.5 shrink-0 group" aria-label="Bhu-Mitra Government of India Home">
+        <Link href="/" className="flex items-center gap-2 2xl:gap-2.5 shrink-0 group" aria-label="DHARA — Government of India Home">
           <div className="h-8 sm:h-10 2xl:h-11 w-auto flex items-center justify-center shrink-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -112,7 +112,7 @@ export const GovernmentHeader: React.FC = () => {
               {isHindi ? 'भूमि संसाधन विभाग · ग्रामीण विकास मंत्रालय' : 'Department of Land Resources · MoRD'}
             </span>
             <span className="text-[8.5px] sm:text-[9px] font-semibold text-slate-500 tracking-tight flex items-center gap-1">
-              <span>{isHindi ? 'भूमि-मित्र' : 'Bhu-Mitra'}</span>
+              <span>{isHindi ? 'डीएचएआरए' : 'DHARA'}</span>
               <span className="text-slate-300">•</span>
               <span className="text-[#138808] font-bold">{isHindi ? 'राष्ट्रीय कमान मंच' : 'National Command'}</span>
             </span>

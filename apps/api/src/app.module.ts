@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 import { EmbeddedPgModule } from './common/embedded-pg/embedded-pg.module';
 import { DataStoreModule } from './common/data-store/data-store.module';
 import { PrismaModule } from './common/prisma/prisma.module';
@@ -26,6 +28,18 @@ import { AiModule } from './modules/ai/ai.module';
       isGlobal: true,
       envFilePath: ['.env.local', '.env'],
     }),
+
+    // SEC-10: Rate limiting — applied globally via APP_GUARD below.
+    // Auth endpoints get a stricter limit (20 req/min) via @Throttle() override.
+    // The default allows 100 requests per 60 seconds per IP.
+    ThrottlerModule.forRoot([
+      {
+        name: 'default',
+        ttl: 60_000,  // 60 seconds window
+        limit: 100,   // 100 requests per window
+      },
+    ]),
+
     // EmbeddedPgModule MUST come before PrismaModule so the embedded server
     // starts and patches DATABASE_URL before Prisma attempts to connect.
     EmbeddedPgModule,
@@ -49,7 +63,13 @@ import { AiModule } from './modules/ai/ai.module';
     AiModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    // SEC-10: Register ThrottlerGuard globally so every endpoint is rate-limited.
+    // Individual endpoints can override via @Throttle() or @SkipThrottle().
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
 })
 export class AppModule {}
-

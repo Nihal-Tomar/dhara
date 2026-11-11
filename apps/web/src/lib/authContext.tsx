@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * Bhu-Mitra Authentication & RBAC Provider
+ * DHARA Authentication & RBAC Provider
  * Smart India Hackathon 2026 — Problem Statement SIH26016
  *
  * Implements real session persistence, role-based authorization,
@@ -183,24 +183,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       } else {
-        // Default to District Collector session for an instant, seamless judge demo
-        const defaultPreset = CANONICAL_PRESETS[0];
-        const defaultUser: UserSession = {
-          id: defaultPreset.id,
-          officerId: defaultPreset.id,
-          name: defaultPreset.name,
-          email: `${defaultPreset.id.toLowerCase()}@nic.in`,
-          role: defaultPreset.role,
-          roleLabel: defaultPreset.roleLabel,
-          designation: defaultPreset.designation,
-          jurisdiction: defaultPreset.jurisdiction,
-          stateCode: defaultPreset.stateCode,
-          districtName: defaultPreset.districtName,
-          permissions: defaultPreset.permissions,
-        };
-        setUser(defaultUser);
-        localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(defaultUser));
-        localStorage.setItem(STORAGE_KEY_TOKEN, `bhumitra_demo_jwt_${defaultPreset.id}`);
+        // SEC-10 FIXED: Auto-login as District Collector is now gated behind
+        // NEXT_PUBLIC_DEMO_MODE=true. When false (production), the user must
+        // explicitly log in and no default privileged session is created.
+        const isDemoMode = process.env.NEXT_PUBLIC_DEMO_MODE === 'true';
+        if (isDemoMode) {
+          const defaultPreset = CANONICAL_PRESETS[0];
+          const defaultUser: UserSession = {
+            id: defaultPreset.id,
+            officerId: defaultPreset.id,
+            name: defaultPreset.name,
+            email: `${defaultPreset.id.toLowerCase()}@nic.in`,
+            role: defaultPreset.role,
+            roleLabel: defaultPreset.roleLabel,
+            designation: defaultPreset.designation,
+            jurisdiction: defaultPreset.jurisdiction,
+            stateCode: defaultPreset.stateCode,
+            districtName: defaultPreset.districtName,
+            permissions: defaultPreset.permissions,
+          };
+          setUser(defaultUser);
+          localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(defaultUser));
+          localStorage.setItem(STORAGE_KEY_TOKEN, `bhumitra_demo_jwt_${defaultPreset.id}`);
+        }
+        // In production (DEMO_MODE=false): setUser remains null, forcing explicit login.
       }
     } catch {
       // ignore

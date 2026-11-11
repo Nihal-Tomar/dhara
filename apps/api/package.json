@@ -2,7 +2,7 @@
   "name": "@bhumitra/api",
   "version": "1.0.0",
   "private": true,
-  "description": "BhuMitra NestJS API — National Land Acquisition Management Backend",
+  "description": "DHARA NestJS API — National Land Acquisition Management Backend",
   "license": "UNLICENSED",
   "scripts": {
     "predev": "prisma generate",
@@ -40,6 +40,7 @@
     "@nestjs/platform-express": "^11.1.3",
     "@nestjs/swagger": "^11.2.0",
     "@nestjs/terminus": "^11.0.0",
+    "@nestjs/throttler": "^6.7.1",
     "@prisma/client": "^6.9.0",
     "bcryptjs": "^3.0.2",
     "class-transformer": "^0.5.1",

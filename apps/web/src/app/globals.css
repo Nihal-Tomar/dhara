@@ -4,379 +4,318 @@
 @source "../**/*.{ts,tsx}";
 
 /* =========================================================
-   BHUMITRA — Government of India Design System
-   National Land Acquisition Intelligence & Management Platform
-   Department of Land Resources (DoLR), MoRD
+   DHARA — Warm Porcelain Editorial  v9.0
+   Warm Ivory Canvas · Terracotta Ochre · Forest Emerald
+   DoLR · MoRD · Government of India
    ========================================================= */
 
-/* ── Design Tokens ──────────────────────────────────────── */
 :root {
-  /* Government Palette */
-  --gov-navy-dark:    #0B1F33;
-  --gov-navy:         #0F2D4A;
-  --gov-navy-light:   #1A3D5C;
-  --ashoka-blue:      #000080;
-  --saffron:          #FF9933;
-  --saffron-dark:     #E8860A;
-  --indian-green:     #138808;
-  --indian-green-dark:#0D6606;
-  --gov-white:        #FFFFFF;
+  /* ── Warm Porcelain Surfaces ── */
+  --porcelain:        #F5F0E8;   /* Warm ivory — matches reference design */
+  --porcelain-deep:   #EDE5D8;   /* Section alternation / lifecycle bg */
+  --white-paper:      #FFFEFB;   /* Slightly warm white for cards */
 
-  /* Surfaces */
-  --surface-bg:       #F5F7FA;
-  --surface-card:     #FFFFFF;
-  --surface-subtle:   #EEF1F6;
-  --surface-muted:    #E3E8EF;
+  /* ── Ink Text ── */
+  --ink-dark:         #1A202C;   /* Deep Slate Ink — primary text */
+  --ink-darker:       #0F172A;   /* Even deeper for headlines */
+  --ink-muted:        #64748B;   /* Secondary / sub-head text */
+  --ink-faint:        #94A3B8;   /* Tertiary / disabled */
 
-  /* Text */
-  --text-primary:     #17212B;
-  --text-secondary:   #3D4E5E;
-  --text-muted:       #5B6875;
-  --text-light:       #8A9BB0;
+  /* ── Terracotta Ochre Accent ── */
+  --terracotta:       #C85A32;
+  --terracotta-dark:  #B34E2A;
+  --terracotta-light: rgba(200,90,50,0.10);
+  --terracotta-border:rgba(200,90,50,0.25);
 
-  /* Borders */
-  --border-default:   #D0D8E4;
-  --border-light:     #E3E8EF;
-  --border-strong:    #B8C4D0;
+  /* ── Forest Emerald Accent ── */
+  --forest:           #1E4D38;
+  --forest-dark:      #143526;
+  --forest-light:     #10B981;   /* GIS / status green */
+  --forest-glow:      rgba(16,185,129,0.12);
 
-  /* Semantic */
-  --success:          #137333;
-  --success-bg:       #E8F5E2;
-  --warning:          #B45309;
-  --warning-bg:       #FEF3C7;
-  --danger:           #B42318;
-  --danger-bg:        #FEE2E2;
-  --info:             #155EEF;
-  --info-bg:          #EFF6FF;
+  /* ── Card surfaces — warm champagne border so cards pop on ivory bg ── */
+  --card-bg:          #FFFEFB;
+  --card-border:      #E2DDD3;                        /* warm champagne border */
+  --card-shadow:      0 1px 2px rgba(30,41,59,0.05), 0 2px 8px rgba(30,41,59,0.04);
+  --card-shadow-hover:0 4px 16px rgba(30,41,59,0.09), 0 1px 4px rgba(30,41,59,0.05);
 
-  /* Typography — uses Next.js font variables injected on <body> */
-  --font-sans:        var(--font-inter, 'Inter', 'Segoe UI', system-ui, sans-serif);
-  --font-devanagari:  var(--font-devanagari, 'Noto Sans Devanagari', 'Mangal', sans-serif);
+  /* ── Borders & Dividers ── */
+  --border-light:     rgba(30,41,59,0.08);
+  --border-medium:    rgba(30,41,59,0.14);
+
+  /* ── Fonts ── */
+  --font-ui:          'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-serif:       'Instrument Serif', 'Georgia', serif;
   --font-mono:        'JetBrains Mono', 'Consolas', monospace;
+  --font-devanagari:  'Noto Sans Devanagari', 'Mangal', sans-serif;
 
-  /* Spacing scale */
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
+  /* ── Status ── */
+  --success:          #10B981;
+  --success-bg:       rgba(16,185,129,0.10);
+  --warning:          #D97706;
+  --warning-bg:       rgba(217,119,6,0.10);
+  --danger:           #DC2626;
+  --danger-bg:        rgba(220,38,38,0.10);
+  --info:             #0891B2;
+  --info-bg:          rgba(8,145,178,0.10);
 
-  /* Radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 10px;
+  /* ── Radii ── */
+  --r-pill:    9999px;
+  --r-card:    16px;
+  --r-card-sm: 12px;
+  --r-input:   10px;
+  --r-chip:    6px;
 
-  /* Shadows */
-  --shadow-xs:  0 1px 2px 0 rgba(15,35,60,0.06);
-  --shadow-sm:  0 1px 3px 0 rgba(15,35,60,0.08), 0 1px 2px -1px rgba(15,35,60,0.06);
-  --shadow-md:  0 4px 6px -1px rgba(15,35,60,0.08), 0 2px 4px -2px rgba(15,35,60,0.06);
+  /* ── Transitions ── */
+  --tx-fast:   0.12s ease;
+  --tx-base:   0.18s ease;
+  --tx-smooth: 0.24s cubic-bezier(0.4,0,0.2,1);
+  --tx-spring: 0.30s cubic-bezier(0.34,1.56,0.64,1);
 
-  /* Z-index */
-  --z-masthead: 100;
+  /* ── Layout ── */
+  --container-max:    1280px;
+  --container-wide:   1440px;
+  --container-gutter: 24px;
+
+  /* ── Z ── */
   --z-nav:      90;
+  --z-dropdown: 110;
   --z-modal:    200;
   --z-tooltip:  300;
+
+  /* ── Legacy aliases (kept for inner-page components) ── */
+  --slate-900:        #0F172A;
+  --slate-800:        #1E293B;
+  --slate-700:        #334155;
+  --slate-600:        #475569;
+  --slate-400:        #94A3B8;
+  --slate-300:        #CBD5E1;
+  --slate-200:        #E2E8F0;
+  --amber:            #D97706;
+  --amber-dark:       #B45309;
+  --emerald:          #10B981;
+  --emerald-dark:     #059669;
+  --cyan:             #0891B2;
+  --text-white:       #FFFFFF;
+  --text-primary:     #1A202C;
+  --text-secondary:   #64748B;
+  --text-tertiary:    #94A3B8;
+  --text-disabled:    #CBD5E1;
+  --border:           rgba(30,41,59,0.10);
+  --border-hover:     rgba(16,185,129,0.40);
+  --border-amber:     rgba(217,119,6,0.30);
+  --bg-base:          #F5F0E8;
+  --bg-raised:        #FFFEFB;
+  --bg-surface:       rgba(255,255,255,0.80);
+  --bg-surface-hover: rgba(255,255,255,0.95);
+  --bg-inset:         rgba(30,41,59,0.03);
+  --shadow-card:      0 1px 2px rgba(30,41,59,0.05), 0 2px 8px rgba(30,41,59,0.04);
+  --shadow-pill:      0 8px 32px rgba(30,41,59,0.10), 0 2px 8px rgba(30,41,59,0.06);
+  --shadow-lift:      0 12px 48px rgba(30,41,59,0.12);
+  --emerald-glow:     rgba(16,185,129,0.12);
+  --amber-glow:       rgba(217,119,6,0.12);
+  --cyan-glow:        rgba(8,145,178,0.12);
+  --success-bg:       rgba(16,185,129,0.10);
+  --warning-bg:       rgba(217,119,6,0.10);
+  --danger-bg:        rgba(220,38,38,0.10);
+  --info-bg:          rgba(8,145,178,0.10);
 }
 
-/* ── Base Reset ─────────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
+/* ── Reset ──────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing: border-box; }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 100%;
   overflow-x: hidden;
+  color-scheme: light;
+  background-color: var(--porcelain);
 }
-
 body {
-  background-color: var(--surface-bg);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  line-height: 1.6;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
+  background: transparent;
+  color: var(--ink-dark);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  line-height: 1.65;
+  margin: 0; padding: 0;
   overflow-x: hidden;
 }
+:lang(hi) { font-family:var(--font-devanagari),var(--font-ui); }
+h1,h2,h3,h4,h5,h6 { margin:0; font-weight:700; color:var(--ink-darker); line-height:1.1; letter-spacing:-0.02em; }
 
-/* Hindi/Devanagari font override */
-:lang(hi),
-.font-devanagari,
-[data-locale="hi"] {
-  font-family: var(--font-devanagari), var(--font-sans);
-}
+/* ── Accessibility ──────────────────────────────────────── */
+:focus-visible { outline:2px solid var(--terracotta); outline-offset:3px; border-radius:var(--r-chip); }
+.skip-nav { position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; z-index:var(--z-tooltip); }
+.skip-nav:focus { left:16px; top:16px; width:auto; height:auto; background:var(--terracotta); color:#fff; font-weight:700; padding:8px 16px; border-radius:var(--r-input); text-decoration:none; }
 
-/* ── Typography ─────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-sans);
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--text-primary);
-  margin: 0;
-}
+/* ── India Tricolor ─────────────────────────────────────── */
+.tricolor-strip { height:3px; background:linear-gradient(90deg,#FF9933 33.33%,#FFFFFF 33.33% 66.66%,#138808 66.66%); }
 
-/* ── Focus / Accessibility ──────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--ashoka-blue);
-  outline-offset: 2px;
-  border-radius: var(--radius-sm);
-}
+/* ── Pill Navbar — all styling is via inline styles in DharaHeader ── */
+.pill-nav-wrapper {}
+.pill-nav-container {}
+.pill-nav {}
+.pill-nav.scrolled {}
+.has-pill-nav { padding-top: 0; }
 
-/* Skip to content */
-.skip-nav {
-  position: absolute;
-  left: -9999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  z-index: var(--z-tooltip);
+/* ── Paper Cards ────────────────────────────────────────── */
+.paper-card {
+  background: var(--white-paper);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--tx-smooth), transform var(--tx-smooth);
 }
-.skip-nav:focus {
-  left: 16px;
-  top: 16px;
-  width: auto;
-  height: auto;
-  background: var(--saffron);
-  color: #000;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: var(--radius-md);
-  text-decoration: none;
+.paper-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
-/* ── Government Tricolor Bar ────────────────────────────── */
-.tricolor-bar {
-  height: 3px;
-  background: linear-gradient(
-    to right,
-    var(--saffron) 0% 33.33%,
-    #FFFFFF 33.33% 66.66%,
-    var(--indian-green) 66.66% 100%
-  );
+/* glass-card → same as paper-card on homepage */
+.glass-card {
+  background: var(--white-paper);
+  border: 1px solid var(--card-border);
+  border-radius: var(--r-card);
+  box-shadow: var(--card-shadow);
+  transition: box-shadow var(--tx-smooth), transform var(--tx-smooth);
+}
+.glass-card:hover {
+  box-shadow: var(--card-shadow-hover);
+  transform: translateY(-2px);
 }
 
-/* ── Government Masthead ────────────────────────────────── */
-.gov-masthead {
-  background-color: var(--gov-navy-dark);
-  color: #fff;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+/* ── Buttons ────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  background: var(--terracotta); color: #FFFFFF;
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 14px 28px;
+  font-family: var(--font-ui); font-weight: 600; font-size: 14px; letter-spacing: 0.01em;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(200,90,50,0.25);
+  transition: background var(--tx-base), transform var(--tx-spring), box-shadow var(--tx-base);
 }
+.btn-primary:hover { background: var(--terracotta-dark); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,90,50,0.35); }
+.btn-primary:active { transform: translateY(0); }
 
-/* ── Primary Nav ────────────────────────────────────────── */
-.gov-nav {
-  background-color: var(--gov-navy);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  background: transparent; color: var(--ink-dark);
+  border: 1px solid rgba(100,116,139,0.30);
+  border-radius: var(--r-pill);
+  padding: 14px 28px;
+  font-family: var(--font-ui); font-weight: 600; font-size: 14px;
+  cursor: pointer; text-decoration: none; white-space: nowrap;
+  transition: background var(--tx-base), border-color var(--tx-base), transform var(--tx-base);
 }
+.btn-ghost:hover { background: rgba(255,255,255,0.80); border-color: rgba(100,116,139,0.50); transform: translateY(-1px); }
 
-/* ── Content Surfaces ───────────────────────────────────── */
-.gov-page {
-  background-color: var(--surface-bg);
-  min-height: 100vh;
+/* ── Badges ─────────────────────────────────────────────── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
+  padding: 3px 8px; border-radius: var(--r-pill); white-space: nowrap;
 }
+.badge-emerald { background: rgba(16,185,129,0.10); color: #059669; border: 1px solid rgba(16,185,129,0.25); }
+.badge-amber   { background: rgba(217,119,6,0.10);  color: #D97706; border: 1px solid rgba(217,119,6,0.25); }
+.badge-warning { background: rgba(217,119,6,0.10);  color: #D97706; border: 1px solid rgba(217,119,6,0.25); }
+.badge-cyan    { background: rgba(8,145,178,0.10);  color: #0891B2; border: 1px solid rgba(8,145,178,0.20); }
+.badge-success { background: rgba(16,185,129,0.10); color: #059669; border: 1px solid rgba(16,185,129,0.20); }
+.badge-danger  { background: rgba(220,38,38,0.08);  color: #DC2626; border: 1px solid rgba(220,38,38,0.20); }
+.badge-high    { background: rgba(217,119,6,0.10);  color: #D97706; border: 1px solid rgba(217,119,6,0.25); }
+.badge-info    { background: rgba(8,145,178,0.10);  color: #0891B2; border: 1px solid rgba(8,145,178,0.20); }
+.badge-neutral { background: rgba(30,41,59,0.06);   color: var(--ink-muted); border: 1px solid rgba(30,41,59,0.10); }
 
-.gov-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xs);
-}
+/* ── Mono data ──────────────────────────────────────────── */
+.data-value { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
 
-.gov-card-elevated {
-  background: var(--surface-card);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-}
+/* ── Eyebrow ────────────────────────────────────────────── */
+.eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1.4; }
 
-/* ── KPI / Metric tiles ─────────────────────────────────── */
-.kpi-tile {
-  background: var(--surface-card);
-  border: 1px solid var(--border-light);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
-}
+/* ── Containers ─────────────────────────────────────────── */
+.container-dhara      { width: 100%; max-width: var(--container-max);  margin: 0 auto; padding: 0 var(--container-gutter); }
+.container-dhara-wide { width: 100%; max-width: var(--container-wide); margin: 0 auto; padding: 0 var(--container-gutter); }
 
-.kpi-tile:hover {
-  border-color: var(--border-strong);
-  box-shadow: var(--shadow-sm);
-}
-
-/* ── Status Badge refinements ───────────────────────────── */
-.status-dot {
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+/* ── Section spacing ────────────────────────────────────── */
+.section-gap    { padding-top: 80px;  padding-bottom: 80px; }
+.section-gap-lg { padding-top: 112px; padding-bottom: 112px; }
 
 /* ── Tables ─────────────────────────────────────────────── */
-.gov-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-}
+.dhara-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.dhara-table th { background: rgba(30,41,59,0.03); color: var(--ink-muted); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--card-border); white-space: nowrap; }
+.dhara-table td { padding: 11px 14px; border-bottom: 1px solid rgba(30,41,59,0.05); color: var(--ink-dark); vertical-align: middle; }
+.dhara-table tbody tr:hover { background: rgba(30,41,59,0.02); }
 
-.gov-table th {
-  background-color: var(--surface-subtle);
-  color: var(--text-secondary);
-  font-weight: 600;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 10px 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--border-default);
-  white-space: nowrap;
-}
+/* ── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--porcelain-deep); }
+::-webkit-scrollbar-thumb { background: rgba(30,41,59,0.18); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(30,41,59,0.30); }
 
-.gov-table td {
-  padding: 11px 14px;
-  border-bottom: 1px solid var(--border-light);
-  color: var(--text-primary);
-  vertical-align: middle;
-}
-
-.gov-table tbody tr:hover {
-  background-color: var(--surface-subtle);
-}
-
-/* ── Buttons ─────────────────────────────────────────────── */
-.btn-primary {
-  background-color: var(--gov-navy);
-  color: #fff;
-  border: 1px solid var(--gov-navy);
-  border-radius: var(--radius-md);
-  padding: 8px 18px;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.15s, box-shadow 0.15s;
-}
-.btn-primary:hover {
-  background-color: var(--gov-navy-light);
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-md);
-  padding: 8px 18px;
-  font-weight: 500;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.15s, border-color 0.15s;
-}
-.btn-secondary:hover {
-  background-color: var(--surface-subtle);
-  border-color: var(--border-strong);
-}
-
-.btn-accent {
-  background-color: var(--saffron);
-  color: #000;
-  border: 1px solid var(--saffron-dark);
-  border-radius: var(--radius-md);
-  padding: 8px 18px;
-  font-weight: 700;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background-color 0.15s;
-}
-.btn-accent:hover {
-  background-color: var(--saffron-dark);
-  color: #fff;
-}
-
-/* ── Workflow / Stepper ─────────────────────────────────── */
-.workflow-step-completed {
-  border-color: var(--indian-green);
-  background-color: var(--success-bg);
-}
-
-.workflow-step-current {
-  border-color: var(--saffron);
-  background-color: #FFF7ED;
-}
-
-/* ── Alert Panels ───────────────────────────────────────── */
-.alert-critical {
-  background: var(--danger-bg);
-  border-left: 3px solid var(--danger);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 12px 16px;
-}
-
-.alert-warning {
-  background: var(--warning-bg);
-  border-left: 3px solid var(--warning);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 12px 16px;
-}
-
-.alert-success {
-  background: var(--success-bg);
-  border-left: 3px solid var(--success);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 12px 16px;
-}
-
-.alert-info {
-  background: var(--info-bg);
-  border-left: 3px solid var(--info);
-  border-radius: 0 var(--radius-md) var(--radius-md) 0;
-  padding: 12px 16px;
-}
-
-/* ── Reduced Motion ─────────────────────────────────────── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-}
-
-/* ── High Contrast Mode ─────────────────────────────────── */
-.gov-high-contrast {
-  --surface-bg: #000;
-  --surface-card: #000;
-  --text-primary: #fff;
-  --border-default: #fff;
-  --gov-navy-dark: #000080;
-}
-
-/* ── Tailwind theme extensions ──────────────────────────── */
+/* ── Tailwind bridge ────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--surface-bg);
-  --color-foreground: var(--text-primary);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
+  --color-background: var(--porcelain);
+  --color-foreground: var(--ink-dark);
+  --font-sans: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 }
 
-/* ── Scrollbar refinements ──────────────────────────────── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: var(--surface-subtle); }
-::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
-
-/* ── Print ───────────────────────────────────────────────── */
-@media print {
-  .gov-masthead, .gov-nav, .no-print { display: none !important; }
-  body { background: white; color: black; }
+/* ═══════════════════════════════════════════════════════════
+   TOPOGRAPHIC BACKGROUND
+   Natural, irregular land-survey elevation contour lines.
+   Warm taupe stroke (#B8A898) on ivory background.
+   Multiple organic terrain groups — no grids, no circles.
+   Applied at opacity 0.22 via page.tsx for the right visibility.
+   ═══════════════════════════════════════════════════════════ */
+.topo-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1200' height='900' fill='none'%3E%3Cg stroke='%23B8A898' stroke-width='1.1'%3E%3C!-- Central hill: 7 nested contours --%3E%3Cpath d='M600,55 Q755,78 848,186 Q941,294 908,406 Q875,518 770,578 Q665,638 552,616 Q439,594 366,496 Q293,398 314,282 Q335,166 440,105 Q516,68 600,55Z'/%3E%3Cpath d='M600,15 Q778,42 882,164 Q986,286 950,410 Q914,534 800,600 Q686,666 557,642 Q428,618 350,508 Q272,398 292,268 Q312,138 426,72 Q508,32 600,15Z'/%3E%3Cpath d='M600,95 Q735,114 818,208 Q901,302 870,402 Q839,502 744,556 Q649,610 546,590 Q443,570 380,480 Q317,390 336,286 Q355,182 452,128 Q524,98 600,95Z'/%3E%3Cpath d='M600,135 Q715,150 790,232 Q865,314 836,400 Q807,486 722,534 Q637,582 540,564 Q443,546 386,462 Q329,378 346,286 Q363,194 453,146 Q524,126 600,135Z'/%3E%3Cpath d='M600,174 Q694,186 760,256 Q826,326 800,398 Q774,470 700,512 Q626,554 536,538 Q446,522 394,444 Q342,366 358,288 Q374,210 457,169 Q526,154 600,174Z'/%3E%3Cpath d='M600,213 Q673,222 731,281 Q789,340 765,398 Q741,456 678,492 Q615,528 532,513 Q449,498 403,426 Q357,354 371,290 Q385,226 462,192 Q528,176 600,213Z'/%3E%3Cpath d='M600,252 Q652,258 702,305 Q752,352 729,398 Q706,444 653,473 Q600,502 528,488 Q456,474 414,408 Q372,342 384,292 Q396,242 464,218 Q530,196 600,252Z'/%3E%3C!-- Left terrain cluster --%3E%3Cpath d='M108,65 Q218,32 288,120 Q358,208 316,296 Q274,384 172,392 Q70,400 26,308 Q-18,216 40,128 Q72,80 108,65Z'/%3E%3Cpath d='M108,22 Q242,-8 324,96 Q406,200 358,300 Q310,400 194,408 Q78,416 26,312 Q-26,208 40,100 Q75,42 108,22Z'/%3E%3Cpath d='M108,106 Q196,76 254,152 Q312,228 278,302 Q244,376 162,382 Q80,388 42,308 Q4,228 56,154 Q84,116 108,106Z'/%3E%3Cpath d='M108,146 Q177,120 226,183 Q275,246 248,306 Q221,366 155,370 Q89,374 57,306 Q25,238 65,178 Q88,146 108,146Z'/%3E%3Cpath d='M108,184 Q158,164 198,215 Q238,266 218,312 Q198,358 148,360 Q98,362 72,304 Q46,246 73,202 Q91,176 108,184Z'/%3E%3C!-- Right terrain cluster --%3E%3Cpath d='M1092,65 Q1182,32 1210,138 Q1238,244 1178,322 Q1118,400 1024,400 Q930,400 892,314 Q854,228 904,142 Q942,80 1092,65Z'/%3E%3Cpath d='M1092,22 Q1200,-4 1226,122 Q1252,248 1186,332 Q1120,416 1016,414 Q912,412 870,316 Q828,220 884,128 Q926,52 1092,22Z'/%3E%3Cpath d='M1092,106 Q1162,78 1188,170 Q1214,262 1156,336 Q1098,410 1020,406 Q942,402 906,316 Q870,230 918,154 Q954,112 1092,106Z'/%3E%3Cpath d='M1092,146 Q1144,120 1164,198 Q1184,276 1134,342 Q1084,408 1016,402 Q948,396 918,318 Q888,240 930,172 Q960,138 1092,146Z'/%3E%3C!-- Bottom left hillock --%3E%3Cpath d='M148,648 Q256,612 322,696 Q388,780 348,858 Q308,936 208,940 Q108,944 64,864 Q20,784 76,700 Q108,656 148,648Z'/%3E%3Cpath d='M148,692 Q230,660 288,732 Q346,804 312,866 Q278,928 198,930 Q118,932 80,864 Q42,796 88,724 Q116,688 148,692Z'/%3E%3Cpath d='M148,735 Q207,706 256,765 Q305,824 274,876 Q243,928 183,930 Q123,932 90,872 Q57,812 94,754 Q118,728 148,735Z'/%3E%3C!-- Bottom right hillock --%3E%3Cpath d='M1052,648 Q1160,612 1198,700 Q1236,788 1194,860 Q1152,932 1056,938 Q960,944 924,866 Q888,788 936,704 Q966,656 1052,648Z'/%3E%3Cpath d='M1052,692 Q1136,658 1168,738 Q1200,818 1160,874 Q1120,930 1050,934 Q980,938 946,870 Q912,802 952,728 Q976,688 1052,692Z'/%3E%3Cpath d='M1052,735 Q1113,704 1140,770 Q1167,836 1130,882 Q1093,928 1032,930 Q971,932 942,874 Q913,816 946,758 Q970,728 1052,735Z'/%3E%3C!-- Top spurs --%3E%3Cpath d='M572,-4 Q638,10 658,68 Q678,126 646,170 Q614,214 568,208 Q522,202 504,154 Q486,106 514,56 Q536,16 572,-4Z'/%3E%3Cpath d='M852,-4 Q916,8 932,68 Q948,128 914,168 Q880,208 834,200 Q788,192 774,144 Q760,96 790,50 Q816,10 852,-4Z'/%3E%3Cpath d='M316,-4 Q370,8 384,62 Q398,116 368,154 Q338,192 296,186 Q254,180 242,134 Q230,88 256,46 Q276,10 316,-4Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 1200px 900px;
+  background-repeat: repeat;
 }
+
+/* ── GIS HUD grid (lighter for porcelain bg) ─────────────── */
+.gis-hud-grid {
+  background-image:
+    linear-gradient(rgba(30,41,59,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,41,59,0.04) 1px, transparent 1px),
+    linear-gradient(rgba(30,41,59,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(30,41,59,0.02) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px, 15px 15px, 15px 15px;
+}
+
+/* ── Sparkline animation ────────────────────────────────── */
+@keyframes drawLine { from { stroke-dashoffset: 220; } to { stroke-dashoffset: 0; } }
+.sparkline-path { stroke-dasharray: 220; stroke-dashoffset: 220; animation: drawLine 1.6s cubic-bezier(0.16,1,0.3,1) both; animation-delay: 0.5s; }
+
+/* ── Entry animations ───────────────────────────────────── */
+@keyframes fadeUp    { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+@keyframes fadeIn    { from{opacity:0} to{opacity:1} }
+@keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+@keyframes shimmer   { 0%{background-position:-200% 0} 100%{background-position:200% 0} }
+@keyframes pulseDot  { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.75)} }
+@keyframes scanLine  { 0%{transform:translateY(-100%)} 100%{transform:translateY(500%)} }
+
+.animate-fade-up   { animation: fadeUp    0.5s cubic-bezier(0.16,1,0.3,1) both; }
+.animate-fade-in   { animation: fadeIn    0.4s ease both; }
+.animate-slideDown { animation: slideDown 0.22s ease forwards; }
+.anim-delay-1 { animation-delay: 0.06s; }
+.anim-delay-2 { animation-delay: 0.12s; }
+.anim-delay-3 { animation-delay: 0.18s; }
+.anim-delay-4 { animation-delay: 0.24s; }
+.anim-delay-5 { animation-delay: 0.30s; }
+
+/* IntersectionObserver reveal */
+.reveal { opacity: 0; }
+.reveal.in-view { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
+/* ── Reduced motion ─────────────────────────────────────── */
+@media (prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:0.01ms!important; animation-iteration-count:1!important; transition-duration:0.01ms!important; scroll-behavior:auto!important; }
+  .reveal { opacity:1; }
+  .sparkline-path { stroke-dashoffset:0; }
+}
+
+/* ── Print ──────────────────────────────────────────────── */
+@media print { .pill-nav-wrapper,.no-print{display:none!important} body{background:white;color:black} }

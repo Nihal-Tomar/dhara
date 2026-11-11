@@ -2,7 +2,7 @@
   "name": "@bhumitra/web",
   "version": "1.0.0",
   "private": true,
-  "description": "BhuMitra Web Application — Next.js Frontend",
+  "description": "DHARA Web Application — Next.js Frontend — Digital Hub for Acquisition, Rehabilitation & Administration",
   "scripts": {
     "dev": "next dev --port 3000",
     "build": "next build",

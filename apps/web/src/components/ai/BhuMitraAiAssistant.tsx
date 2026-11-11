@@ -23,11 +23,11 @@ const OFFICER_GREETING_EN: AiMessage = {
   id: 'msg-welcome-officer-en',
   role: 'assistant',
   content:
-    'Welcome to Bhu-Mitra AI Command Center. I am the national land acquisition decision-support system for the Department of Land Resources (DoLR), Ministry of Rural Development, Government of India. How can I assist your infrastructure monitoring and statutory workflows today?',
+    'Welcome to DHARA AI Command Centre. I am the national land acquisition decision-support system for the Department of Land Resources (DoLR), Ministry of Rural Development, Government of India. How can I assist your infrastructure monitoring and statutory workflows today?',
   structuredResponse: {
-    title: 'Bhu-Mitra Officer Command Center',
+    title: 'DHARA Officer Command Centre',
     summary:
-      'Welcome to Bhu-Mitra AI Command Center. I am the national land acquisition decision-support system for the Department of Land Resources (DoLR), Ministry of Rural Development, Government of India. How can I assist your infrastructure monitoring and statutory workflows today?',
+      'Welcome to DHARA AI Command Centre. I am the national land acquisition decision-support system for the Department of Land Resources (DoLR), Ministry of Rural Development, Government of India. How can I assist your infrastructure monitoring and statutory workflows today?',
     language: 'en',
     detectedIntent: 'WELCOME',
     actions: [
@@ -45,11 +45,11 @@ const OFFICER_GREETING_HI: AiMessage = {
   id: 'msg-welcome-officer-hi',
   role: 'assistant',
   content:
-    'नमस्ते अधिकारी महोदय। भू-मित्र एआई कमांड केंद्र में आपका स्वागत है। मैं भूमि संसाधन विभाग (DoLR), भारत सरकार का राष्ट्रीय भूमि अधिग्रहण एवं निर्णय समर्थन सहायक हूँ। आज मैं आपकी परियोजना निगरानी और वैधानिक प्रक्रियाओं में क्या सहायता कर सकता हूँ?',
+    'नमस्ते अधिकारी महोदय। DHARA एआई कमांड केंद्र में आपका स्वागत है। मैं भूमि संसाधन विभाग (DoLR), भारत सरकार का राष्ट्रीय भूमि अधिग्रहण एवं निर्णय समर्थन सहायक हूँ। आज मैं आपकी परियोजना निगरानी और वैधानिक प्रक्रियाओं में क्या सहायता कर सकता हूँ?',
   structuredResponse: {
-    title: 'भू-मित्र एआई कमांड केंद्र',
+    title: 'DHARA एआई कमांड केंद्र',
     summary:
-      'नमस्ते अधिकारी महोदय। भू-मित्र एआई कमांड केंद्र में आपका स्वागत है। मैं भूमि संसाधन विभाग (DoLR), भारत सरकार का राष्ट्रीय भूमि अधिग्रहण एवं निर्णय समर्थन सहायक हूँ। आज मैं आपकी परियोजना निगरानी और वैधानिक प्रक्रियाओं में क्या सहायता कर सकता हूँ?',
+      'नमस्ते अधिकारी महोदय। DHARA एआई कमांड केंद्र में आपका स्वागत है। मैं भूमि संसाधन विभाग (DoLR), भारत सरकार का राष्ट्रीय भूमि अधिग्रहण एवं निर्णय समर्थन सहायक हूँ। आज मैं आपकी परियोजना निगरानी और वैधानिक प्रक्रियाओं में क्या सहायता कर सकता हूँ?',
     language: 'hi',
     detectedIntent: 'WELCOME',
     actions: [
@@ -67,18 +67,18 @@ const CITIZEN_GREETING_EN: AiMessage = {
   id: 'msg-welcome-citizen-en',
   role: 'assistant',
   content:
-    'Namaste! Welcome to the Bhu-Mitra Citizen Assistance Portal. You can check your land acquisition status, compensation calculations, objection hearings, or mandatory documents under the RFCTLARR Act 2013. You can speak or type in Hindi, English, or your preferred language.',
+    'Namaste! Welcome to the DHARA Citizen Assistance Portal. You can check your land acquisition status, compensation calculations, objection hearings, or mandatory documents under the RFCTLARR Act 2013. You can speak or type in Hindi, English, or your preferred language.',
   structuredResponse: {
-    title: 'Bhu-Mitra Citizen Assistance Portal',
+    title: 'DHARA Citizen Assistance Portal',
     summary:
-      'Namaste! Welcome to the Bhu-Mitra Citizen Assistance Portal. You can check your land acquisition status, compensation calculations, objection hearings, or mandatory documents under the RFCTLARR Act 2013. You can speak or type in Hindi, English, or your preferred language.',
+      'Namaste! Welcome to the DHARA Citizen Assistance Portal. You can check your land acquisition status, compensation calculations, objection hearings, or mandatory documents under the RFCTLARR Act 2013. You can speak or type in Hindi, English, or your preferred language.',
     language: 'en',
     detectedIntent: 'CITIZEN_GREETING',
     actions: [
       { label: 'Track My Land (Survey #103/10)', actionType: 'OPEN_PARCEL', payload: { parcelId: '103-10' } },
       { label: 'Check Compensation', actionType: 'OPEN_COMPENSATION', payload: {} },
     ],
-    sources: ['Bhu-Mitra Citizen Transparency & Land Access Portal'],
+    sources: ['DHARA Citizen Transparency & Land Access Portal'],
   },
   timestamp: new Date().toISOString(),
 };
@@ -87,11 +87,11 @@ const CITIZEN_GREETING_HI: AiMessage = {
   id: 'msg-welcome-citizen-hi',
   role: 'assistant',
   content:
-    'नमस्ते! भू-मित्र नागरिक सहायता केंद्र में आपका स्वागत है। आप अपनी जमीन के अधिग्रहण की स्थिति, मुआवजा गणना, आपत्ति सुनवाई, अथवा आवश्यक दस्तावेजों की जानकारी प्राप्त कर सकते हैं। आप हिंदी में बोलकर या लिखकर प्रश्न पूछ सकते हैं।',
+    'नमस्ते! DHARA नागरिक सहायता केंद्र में आपका स्वागत है। आप अपनी जमीन के अधिग्रहण की स्थिति, मुआवजा गणना, आपत्ति सुनवाई, अथवा आवश्यक दस्तावेजों की जानकारी प्राप्त कर सकते हैं। आप हिंदी में बोलकर या लिखकर प्रश्न पूछ सकते हैं।',
   structuredResponse: {
-    title: 'भू-मित्र नागरिक सहायता केंद्र',
+    title: 'DHARA नागरिक सहायता केंद्र',
     summary:
-      'नमस्ते! भू-मित्र नागरिक सहायता केंद्र में आपका स्वागत है। आप अपनी जमीन के अधिग्रहण की स्थिति, मुआवजा गणना, आपत्ति सुनवाई, अथवा आवश्यक दस्तावेजों की जानकारी प्राप्त कर सकते हैं। आप हिंदी में बोलकर या लिखकर प्रश्न पूछ सकते हैं।',
+      'नमस्ते! DHARA नागरिक सहायता केंद्र में आपका स्वागत है। आप अपनी जमीन के अधिग्रहण की स्थिति, मुआवजा गणना, आपत्ति सुनवाई, अथवा आवश्यक दस्तावेजों की जानकारी प्राप्त कर सकते हैं। आप हिंदी में बोलकर या लिखकर प्रश्न पूछ सकते हैं।',
     language: 'hi',
     detectedIntent: 'CITIZEN_GREETING',
     actions: [
@@ -618,32 +618,51 @@ export const BhuMitraAiAssistant: React.FC = () => {
       {/* ──────────────────────────────────────────────────────────────────────── */}
       {/* Floating Action Trigger Button (Bottom Right)                           */}
       {/* ──────────────────────────────────────────────────────────────────────── */}
-      <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2 select-none">
+      {/* DHARA AI — floating white glassmorphism pill, bottom-6 right-6 */}
+      <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 select-none">
         <button
           type="button"
           onClick={() => {
             setIsOpen((prev) => !prev);
             setIsMinimized(false);
           }}
-          className="group relative flex items-center gap-2.5 px-4 py-3 rounded-full bg-[#0C5A37] hover:bg-[#084228] text-white shadow-xl hover:shadow-2xl transition-all duration-200 active:scale-95 border-2 border-emerald-400/40"
-          aria-label="Open Bhu-Mitra AI Command Center"
+          className="group relative flex items-center gap-2 px-3.5 py-2 rounded-full transition-all duration-200 active:scale-95"
+          style={{
+            background:     'rgba(255,255,255,0.95)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            border:         '1px solid #E2DDD3',
+            boxShadow:      '0 8px 24px rgba(30,41,59,0.13), 0 2px 6px rgba(30,41,59,0.07)',
+            color:          '#1A202C',
+          }}
+          aria-label="Open DHARA AI Command Centre"
         >
-          {/* Glowing Status Indicator */}
-          <span className="relative flex h-3 w-3">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-300 opacity-75" />
-            <span className="relative inline-flex rounded-full h-3 w-3 bg-[#FF9933]" />
-          </span>
+          {/* Terrain logo — same SVG as the navbar */}
+          <svg width="20" height="20" viewBox="0 0 40 40" fill="none" aria-hidden="true" className="shrink-0">
+            <path d="M20 2C10.5 2 3 8.5 3 17C3 22.5 6.5 27 11.5 29C9.5 32 8 35.5 10.5 37C12.5 38.2 15.5 37 17.5 35C18.5 36.2 19.2 37 20 37C20.8 37 21.5 36.2 22.5 35C24.5 37 27.5 38.2 29.5 37C32 35.5 30.5 32 28.5 29C33.5 27 37 22.5 37 17C37 8.5 29.5 2 20 2Z" fill="#C85A32"/>
+            <path d="M20 6.5C13.5 6.5 8 11.5 8 18C8 22.5 10.5 26 15 27.5C13 30.5 12 33.5 14 35C15.5 36 18 35 19.5 33C19.7 33.4 19.85 33.7 20 33.9C20.15 33.7 20.3 33.4 20.5 33C22 35 24.5 36 26 35C28 33.5 27 30.5 25 27.5C29.5 26 32 22.5 32 18C32 11.5 26.5 6.5 20 6.5Z" fill="#15803D"/>
+            <path d="M20 11C15.5 11 12 14.5 12 19C12 22 13.8 24.5 16.5 25.8C15 28 14.5 30.5 16 31.5C17 32.2 18.5 31.5 19.5 30.2C19.65 30.5 19.82 30.75 20 31C20.18 30.75 20.35 30.5 20.5 30.2C21.5 31.5 23 32.2 24 31.5C25.5 30.5 25 28 23.5 25.8C26.2 24.5 28 22 28 19C28 14.5 24.5 11 20 11Z" fill="#10B981"/>
+          </svg>
 
-          <span className="font-extrabold text-xs sm:text-sm tracking-wide">
+          <span
+            className="font-semibold text-xs sm:text-[13px] tracking-wide"
+            style={{ color: '#1A202C' }}
+          >
             {isOpen && !isMinimized
-              ? selectedLang === 'hi' ? 'कमांड सेंटर बंद करें' : 'Close Command Center'
-              : userMode === 'CITIZEN'
-              ? selectedLang === 'hi' ? 'भू-मित्र से पूछें' : 'Speak with Bhu-Mitra'
-              : selectedLang === 'hi' ? 'भू-मित्र एआई' : 'Bhu-Mitra AI'}
+              ? selectedLang === 'hi' ? 'बंद करें' : 'Close'
+              : 'DHARA एआई'}
           </span>
 
-          <span className="hidden lg:inline text-[10px] font-mono bg-[#084228] px-2 py-0.5 rounded text-emerald-200 border border-emerald-600/40">
-            Ctrl+Space
+          {/* Emerald pulse dot */}
+          <span className="relative flex h-2 w-2 shrink-0">
+            <span
+              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-60"
+              style={{ background: '#10B981' }}
+            />
+            <span
+              className="relative inline-flex rounded-full h-2 w-2"
+              style={{ background: '#10B981' }}
+            />
           </span>
         </button>
       </div>
@@ -659,7 +678,7 @@ export const BhuMitraAiAssistant: React.FC = () => {
               : 'bottom-4 right-4 sm:bottom-6 sm:right-6 w-[calc(100vw-2rem)] sm:w-[540px] lg:w-[580px] h-[calc(100vh-2.5rem)] sm:h-[88vh] max-h-[92vh] rounded-[24px]'
           }`}
           role="dialog"
-          aria-label="Bhu-Mitra AI Command Center"
+          aria-label="DHARA AI Command Centre"
         >
           {/* Header Bar */}
           <div className="bg-[#0B1F33] text-white p-3.5 sm:p-4 flex flex-col gap-2.5 border-b border-slate-800 shrink-0">
@@ -673,7 +692,7 @@ export const BhuMitraAiAssistant: React.FC = () => {
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="text-xs sm:text-[14px] font-extrabold tracking-tight text-white">
-                      Bhu-Mitra AI Command Center
+                      DHARA AI Command Centre
                     </h3>
                     <span className="text-[9.5px] font-mono uppercase px-1.5 py-0.5 bg-emerald-950/80 text-emerald-300 border border-emerald-600/40 rounded font-bold">
                       SIH 2026
@@ -1155,7 +1174,7 @@ export const BhuMitraAiAssistant: React.FC = () => {
                         : 'Ask about your land or compensation (e.g. Survey 103/10)...'
                       : selectedLang === 'hi'
                       ? 'प्रश्न पूछें (उदा: रेलवे की नई परियोजनाएं कौन सी हैं?)...'
-                      : 'Ask Bhu-Mitra AI (e.g. Show current railway projects)...'
+                      : 'Ask DHARA AI (e.g. Show current railway projects)...'
                   }
                   className="flex-1 text-xs sm:text-[13px] p-2.5 rounded-xl border border-slate-300 bg-slate-50 focus:bg-white focus:outline-none focus:border-[#0C5A37] focus:ring-1 focus:ring-[#0C5A37] text-slate-900 font-medium transition-all"
                 />

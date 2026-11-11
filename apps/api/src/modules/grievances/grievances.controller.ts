@@ -60,7 +60,7 @@ export class GrievancesController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('DISTRICT_COLLECTOR', 'CALA', 'LAND_ACQUISITION_OFFICER', 'SUPER_ADMIN')
+  @Roles('DISTRICT_COLLECTOR', 'CALA', 'COMPENSATION_OFFICER', 'SUPER_ADMIN')
   @Patch(':id/status')
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Update grievance resolution status' })
@@ -82,7 +82,7 @@ export class GrievancesController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('DISTRICT_COLLECTOR', 'CALA', 'LAND_ACQUISITION_OFFICER', 'SUPER_ADMIN')
+  @Roles('DISTRICT_COLLECTOR', 'CALA', 'COMPENSATION_OFFICER', 'SUPER_ADMIN')
   @Post(':id/hearing')
   @ApiBearerAuth('JWT-auth')
   @ApiOperation({ summary: 'Schedule Section 15 statutory objection hearing' })

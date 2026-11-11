@@ -24,10 +24,35 @@ export class AuthService {
   ) {}
 
   private getJwtSecret(): string {
-    return (
-      this.configService.get<string>('JWT_SECRET') ||
-      'bhumitra_dev_jwt_secret_change_in_production_si2026'
-    );
+    const secret = this.configService.get<string>('JWT_SECRET');
+
+    // SEC-03 FIXED: Fail fast at startup rather than silently using a known-public
+    // development secret. A missing JWT_SECRET in production is a critical misconfiguration.
+    if (!secret) {
+      throw new Error(
+        'FATAL: JWT_SECRET environment variable is not set. ' +
+        'Set a cryptographically random value of at least 64 characters in production.',
+      );
+    }
+
+    // Reject the placeholder values from .env.example so a copy-paste deployment
+    // cannot accidentally deploy with a well-known secret.
+    const knownInsecureValues = [
+      'dhara_dev_jwt_secret_change_in_production_si2026',
+      'bhumitra_dev_jwt_secret_change_in_production_si2026',
+      'REPLACE_WITH_CRYPTOGRAPHICALLY_RANDOM_64_CHAR_SECRET',
+      'change_me',
+      'changeme',
+      'secret',
+    ];
+    if (knownInsecureValues.includes(secret.trim())) {
+      throw new Error(
+        'FATAL: JWT_SECRET is set to a known insecure placeholder value. ' +
+        'Generate a cryptographically random secret before deploying.',
+      );
+    }
+
+    return secret;
   }
 
   async login(loginDto: LoginDto): Promise<AuthResponse> {
@@ -98,8 +123,10 @@ export class AuthService {
       session = this.dataStore.getUserSession(user);
     }
 
-    // Password validation (skipped only for statutory demo SSO mode)
-    if (loginDto.authMode !== 'sso') {
+    // SEC-02 FIXED: Password is always validated via bcrypt regardless of authMode.
+    // The former 'sso' bypass is removed — SSO logins must go through a proper
+    // federated identity provider, not a local bypass flag.
+    {
       const password = loginDto.password || '';
       const isValid = await this.dataStore.verifyPassword(password, userPasswordHash);
       if (!isValid) {

@@ -35,7 +35,7 @@ const STATUTORY_SAFEGUARDS: SafeguardItem[] = [
     provisions: [
       '100% Solatium bonus over and above the assessed market value',
       '12% annual interest from Section 11 notice to final award date',
-      'Transparent valuation worksheet accessible on Bhu-Mitra',
+      'Transparent valuation worksheet accessible on DHARA',
     ],
     statutoryCategory: 'Financial Compensation',
   },

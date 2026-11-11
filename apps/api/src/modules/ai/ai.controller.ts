@@ -7,18 +7,29 @@ import {
   Param,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { AiService } from './services/ai.service';
 import { Public } from '../../common/decorators/public.decorator';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
+import { RequirePermissions } from '../../common/decorators/require-permissions.decorator';
+import { PermissionsGuard } from '../../common/guards/permissions.guard';
 import type { AiQueryDto, UserSession } from '@bhumitra/types';
 
 @ApiTags('Bhu-Mitra AI Assistant & Command Intelligence')
 @Controller('ai')
+// SEC-06: AI endpoints are now authentication-required by default.
+// The public query endpoint is intentionally left accessible for the demo
+// but rate-limited to 30 requests per minute per IP.
+@Throttle({ default: { ttl: 60_000, limit: 30 } })
 export class AiController {
   constructor(private readonly aiService: AiService) {}
 
+  // The /ai/query endpoint remains public for the SIH demo but is rate-limited.
+  // In production, remove @Public() and require JwtAuthGuard.
   @Public()
   @Post('query')
   @HttpCode(HttpStatus.OK)
@@ -34,50 +45,57 @@ export class AiController {
     };
   }
 
-  @Public()
+  @UseGuards(JwtAuthGuard)
   @Get('conversations')
-  @ApiOperation({ summary: 'List recent AI Assistant conversation sessions' })
-  getConversations() {
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'List recent AI Assistant conversation sessions (authenticated)' })
+  getConversations(@CurrentUser() _user: UserSession) {
     const sessions = this.aiService.getConversations();
     return {
       data: sessions,
     };
   }
 
-  @Public()
+  @UseGuards(JwtAuthGuard)
   @Get('conversations/:id')
-  @ApiOperation({ summary: 'Get messages for an AI conversation session' })
-  getConversation(@Param('id') id: string) {
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Get messages for an AI conversation session (authenticated)' })
+  getConversation(@Param('id') id: string, @CurrentUser() _user: UserSession) {
     const session = this.aiService.getConversationById(id);
     return {
       data: session,
     };
   }
 
-  @Public()
+  @UseGuards(JwtAuthGuard)
   @Delete('conversations/:id')
-  @ApiOperation({ summary: 'Delete or clear an AI conversation session' })
-  deleteConversation(@Param('id') id: string) {
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Delete or clear an AI conversation session (authenticated)' })
+  deleteConversation(@Param('id') id: string, @CurrentUser() _user: UserSession) {
     const success = this.aiService.deleteConversation(id);
     return {
       data: { success },
     };
   }
 
-  @Public()
+  @UseGuards(JwtAuthGuard)
   @Get('briefing')
-  @ApiOperation({ summary: 'Get Today AI Daily Executive Briefing' })
-  async getBriefing() {
-    const briefing = await this.aiService.processQuery({ message: 'daily briefing' });
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Get Today AI Daily Executive Briefing (authenticated)' })
+  async getBriefing(@CurrentUser() user: UserSession) {
+    const briefing = await this.aiService.processQuery({ message: 'daily briefing' }, user);
     return {
       data: briefing,
     };
   }
 
-  @Public()
+  // SEC-06: CSV export of acquisition data requires authentication and report:export permission.
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @RequirePermissions('report:export')
   @Get('reports/csv')
-  @ApiOperation({ summary: 'Download consolidated national acquisition MIS report as CSV' })
-  downloadCsv() {
+  @ApiBearerAuth('JWT-auth')
+  @ApiOperation({ summary: 'Download national acquisition MIS report as CSV (requires report:export permission)' })
+  downloadCsv(@CurrentUser() _user: UserSession) {
     const csv = [
       'ProjectCode,CorridorName,State,District,StageCode,ProposedAreaHa,AcquiredAreaHa,CompensationAssessedCr,CompensationDisbursedCr,SLADaysRemaining,RiskLevel',
       'DOLR-2026-0084,NH-48 Bharatmala Six-Laning Corridor,Gujarat,Vadodara,SEC_19_DECLARATION,142.5,89.4,148.5,98.4,8,high',
@@ -90,7 +108,7 @@ export class AiController {
 
     return {
       data: {
-        filename: 'bhumitra-national-acquisition-report.csv',
+        filename: 'dhara-national-acquisition-report.csv',
         contentType: 'text/csv',
         csv,
       },

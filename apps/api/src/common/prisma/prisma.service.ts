@@ -7,19 +7,18 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   private isConnected = false;
 
   constructor() {
+    // SEC-04 / ITEM-5 FIXED: No hardcoded fallback URL.
+    // If DATABASE_URL is not set, PrismaClient will throw at connect time.
+    // The startup validation in main.ts (production) or EmbeddedPgService (dev)
+    // ensures DATABASE_URL is always present before this constructor runs.
     super({
-      datasources: {
-        db: {
-          url:
-            process.env.DATABASE_URL ||
-            'postgresql://bhumitra:bhumitra_secure_dev@127.0.0.1:54329/bhumitra?schema=public',
-        },
-      },
       log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
     });
   }
 
   async onModuleInit() {
+    const isProduction = process.env.NODE_ENV === 'production';
+
     for (let attempt = 1; attempt <= 3; attempt++) {
       try {
         await this.$connect();
@@ -28,8 +27,18 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
         return;
       } catch (error) {
         if (attempt === 3) {
+          if (isProduction) {
+            // SEC-04 FIXED: In production, a failed DB connection is fatal.
+            // Never silently fall back to in-memory demo data in production.
+            this.logger.error(
+              `FATAL: Cannot connect to PostgreSQL after 3 attempts: ${(error as Error).message}. ` +
+              'Refusing to serve requests with in-memory demo data in production.',
+            );
+            process.exit(1);
+          }
           this.logger.warn(
-            `PostgreSQL server not connected (${(error as Error).message}). Operating with in-memory resilient fallback data layer for local evaluation.`,
+            `PostgreSQL not connected (${(error as Error).message}). ` +
+            'Operating with in-memory resilient data store for LOCAL DEVELOPMENT ONLY.',
           );
           this.isConnected = false;
         } else {

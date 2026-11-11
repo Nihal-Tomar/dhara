@@ -1,10 +1,10 @@
-name: bhumitra
+name: dhara
 
 services:
   # Primary Relational & Spatial Database
   postgres:
     image: postgis/postgis:16-3.4
-    container_name: bhumitra_postgres
+    container_name: dhara_postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-bhumitra}
@@ -20,12 +20,12 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # In-Memory Cache, Sessions & Queue Store
   redis:
     image: redis:7-alpine
-    container_name: bhumitra_redis
+    container_name: dhara_redis
     restart: unless-stopped
     ports:
       - "${REDIS_PORT:-6379}:6379"
@@ -37,12 +37,12 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # S3-Compatible Object Storage (Documents, Cadastral Maps, Evidence)
   minio:
     image: minio/minio:RELEASE.2024-05-10T01-41-38Z
-    container_name: bhumitra_minio
+    container_name: dhara_minio
     restart: unless-stopped
     command: server /data --console-address ":9001"
     environment:
@@ -59,14 +59,14 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # NestJS Core API Backend
   api:
     build:
       context: ..
       dockerfile: apps/api/Dockerfile
-    container_name: bhumitra_api
+    container_name: dhara_api
     restart: unless-stopped
     environment:
       NODE_ENV: ${NODE_ENV:-development}
@@ -78,7 +78,7 @@ services:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY:-bhumitra_admin}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY:-bhumitra_minio_secret}
       MINIO_BUCKET: ${MINIO_BUCKET:-bhumitra-documents}
-      JWT_SECRET: ${JWT_SECRET:-bhumitra_dev_jwt_secret_change_in_production_si2026}
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET must be set — do not use the default}
       JWT_ACCESS_EXPIRY: 15m
       JWT_REFRESH_EXPIRY: 7d
       INTELLIGENCE_SERVICE_URL: http://intelligence:8000
@@ -93,14 +93,14 @@ services:
       minio:
         condition: service_healthy
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # Next.js Web Frontend
   web:
     build:
       context: ..
       dockerfile: apps/web/Dockerfile
-    container_name: bhumitra_web
+    container_name: dhara_web
     restart: unless-stopped
     environment:
       NODE_ENV: ${NODE_ENV:-development}
@@ -113,14 +113,14 @@ services:
     depends_on:
       - api
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # Python FastAPI Intelligence & Decision Support Service
   intelligence:
     build:
       context: ../apps/intelligence
       dockerfile: Dockerfile
-    container_name: bhumitra_intelligence
+    container_name: dhara_intelligence
     restart: unless-stopped
     environment:
       PORT: 8000
@@ -131,12 +131,12 @@ services:
       postgres:
         condition: service_healthy
     networks:
-      - bhumitra_net
+      - dhara_net
 
   # Reverse Proxy & Edge Gateway
   nginx:
     image: nginx:1.25-alpine
-    container_name: bhumitra_nginx
+    container_name: dhara_nginx
     restart: unless-stopped
     ports:
       - "80:80"
@@ -147,7 +147,7 @@ services:
       - api
       - intelligence
     networks:
-      - bhumitra_net
+      - dhara_net
 
 volumes:
   postgres_data:
@@ -155,5 +155,5 @@ volumes:
   minio_data:
 
 networks:
-  bhumitra_net:
+  dhara_net:
     driver: bridge

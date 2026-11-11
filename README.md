@@ -1,14 +1,14 @@
-# BHUMITRA (भू-मित्र)
-## National Land Acquisition Intelligence & Management Platform
+# DHARA (धारा)
+## Digital Hub for Acquisition, Rehabilitation & Administration
 ### Smart India Hackathon 2026 — Problem Statement 26016
 
-> **"One Nation. One Land Acquisition Workflow. Real-Time Governance."**
+> **"Intelligent Land Acquisition. Transparent Governance."**
 
 ---
 
 ## 🏛️ Executive Summary
 
-**BhuMitra** is a unified digital operating platform purpose-engineered for the **Department of Land Resources (DoLR), Ministry of Rural Development, Government of India**. 
+**DHARA** is a unified digital command platform purpose-engineered for the **Department of Land Resources (DoLR), Ministry of Rural Development, Government of India**.
 
 It digitizes, standardizes, and accelerates end-to-end statutory land acquisition under the **Right to Fair Compensation and Transparency in Land Acquisition, Rehabilitation and Resettlement Act, 2013 (RFCTLARR Act 2013)**.
 
@@ -23,7 +23,7 @@ It digitizes, standardizes, and accelerates end-to-end statutory land acquisitio
 ## 🏗️ Architecture & Monorepo Layout
 
 ```
-bhumitra/
+dhara/
 ├── apps/
 │   ├── web/            # Next.js 16 App Router (Officer Portal & Public Transparency)
 │   ├── api/            # NestJS Core API Gateway & Domain Engine (Port 3001)
@@ -42,6 +42,20 @@ bhumitra/
 
 ---
 
+## 🎨 Design System
+
+DHARA uses a purpose-built government design system:
+
+- **Primary**: Deep Navy Blue `#1A3260` — confident, trustworthy
+- **Accent**: Restrained Amber `#C7820A` — warm government accent
+- **Surfaces**: Light-first `#F6F8FB` with 1–2 confident dark bands for rhythm
+- **Font**: Inter (single-font system, consistent across all surfaces)
+- **CTAs**: Pill radius (`9999px`) per Kirova DNA
+- **Cards**: `16px` radius, soft layered shadows
+- **Breakpoints**: `1024 / 768 / 520`
+
+---
+
 ## 🚀 Quick Start (Local Development)
 
 ### Prerequisites
@@ -52,9 +66,8 @@ bhumitra/
 
 ### 1. Clone & Setup Environment
 ```bash
-# Clone the repository
 git clone <repo-url>
-cd Bhu-Mitra
+cd bhu-mitra   # or your workspace root
 
 # Copy environment template
 cp .env.example .env
@@ -76,6 +89,7 @@ pnpm dev
 # Or start specific applications:
 pnpm --filter @bhumitra/web dev           # Web portal at http://localhost:3000
 pnpm --filter @bhumitra/api dev           # API gateway at http://localhost:3001
+
 # For Python intelligence service:
 cd apps/intelligence && uvicorn main:app --reload --port 8000
 ```
@@ -96,7 +110,7 @@ cd apps/intelligence && uvicorn main:app --reload --port 8000
 
 - [x] **Stage 0**: System Architecture Blueprint
 - [x] **Stage 1**: Project Initialization & Infrastructure Scaffolding
-- [ ] **Stage 2**: Government Design System & Accessibility Foundations
+- [x] **Stage 2**: DHARA Design System & Typography — Kirova DNA Applied
 - [ ] **Stage 3**: Authentication & 12-Role RBAC Model
 - [ ] **Stage 4**: Relational & PostGIS Data Model + Master Seed
 - [ ] **Stage 5**: National Command Centre & Executive Dashboard
@@ -129,3 +143,5 @@ cd apps/intelligence && uvicorn main:app --reload --port 8000
 ## 👥 Department of Land Resources (DoLR)
 Ministry of Rural Development, Government of India
 Smart India Hackathon 2026 Prototype
+
+> _Previously known as Bhu-Mitra. Rebranded to DHARA (Digital Hub for Acquisition, Rehabilitation & Administration) — all API contracts, database identifiers, and package names remain stable under `@bhumitra/*` namespace for backwards compatibility._

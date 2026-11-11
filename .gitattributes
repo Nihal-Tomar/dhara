@@ -1,0 +1,36 @@
+# ─── DHARA — Git Line Ending Normalization ───────────────────────────────────
+# Normalize all text files to LF in the repository.
+# Windows checkouts will convert to CRLF; commits always store LF.
+
+* text=auto eol=lf
+
+# Explicitly text files
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.mjs   text eol=lf
+*.json  text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.css   text eol=lf
+*.html  text eol=lf
+*.py    text eol=lf
+*.sh    text eol=lf
+*.sql   text eol=lf
+*.env   text eol=lf
+*.example text eol=lf
+
+# Binary files — no line ending conversion
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
+*.pdf   binary
+*.zip   binary
