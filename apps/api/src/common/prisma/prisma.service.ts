@@ -19,19 +19,19 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   async onModuleInit() {
     const isProduction = process.env.NODE_ENV === 'production';
 
-    for (let attempt = 1; attempt <= 3; attempt++) {
+    for (let attempt = 1; attempt <= 5; attempt++) {
       try {
         await this.$connect();
         this.isConnected = true;
         this.logger.log('Connected to PostgreSQL + PostGIS database');
         return;
       } catch (error) {
-        if (attempt === 3) {
+        if (attempt === 5) {
           if (isProduction) {
             // SEC-04 FIXED: In production, a failed DB connection is fatal.
             // Never silently fall back to in-memory demo data in production.
             this.logger.error(
-              `FATAL: Cannot connect to PostgreSQL after 3 attempts: ${(error as Error).message}. ` +
+              `FATAL: Cannot connect to PostgreSQL after 5 attempts: ${(error as Error).message}. ` +
               'Refusing to serve requests with in-memory demo data in production.',
             );
             process.exit(1);
@@ -42,7 +42,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
           );
           this.isConnected = false;
         } else {
-          await new Promise((r) => setTimeout(r, 800));
+          this.logger.warn(`DB connect attempt ${attempt}/5 failed — retrying in 2s...`);
+          await new Promise((r) => setTimeout(r, 2000));
         }
       }
     }
